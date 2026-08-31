@@ -1,0 +1,3 @@
+function toggleTheme(){var h=document.documentElement;h.setAttribute('data-bs-theme',h.getAttribute('data-bs-theme')==='dark'?'light':'dark');localStorage.setItem('theme',h.getAttribute('data-bs-theme'));}
+function toggleSidebar(){document.getElementById('sidebar').classList.toggle('open');document.getElementById('overlay').classList.toggle('show');}
+(function(){var s=localStorage.getItem('theme');if(s)document.documentElement.setAttribute('data-bs-theme',s);})();

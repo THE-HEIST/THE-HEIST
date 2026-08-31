@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="dark">
+<head>
+    <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>StudySmart - test_priority_level.py</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"><link href="https://unpkg.com/nes.css@2.3.0/css/nes.min.css" rel="stylesheet"><link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <link href="styles.css" rel="stylesheet">
+</head>
+<body>
+<nav class="nes-navbar"><div style="display:flex;align-items:center;gap:1rem;"><button class="hamburger" onclick="toggleSidebar()">☰</button><a href="index.html" class="logo">⬛ StudySmart Docs</a></div><div class="nav-links"><a href="index.html">HOME</a><a href="quick-start.html">QUICK START</a><a href="installation.html">INSTALL</a><a href="user-manual.html">MANUAL</a><button class="toggle-mode" onclick="toggleTheme()">☀/☾</button></div></nav>
+<div class="overlay" id="overlay" onclick="toggleSidebar()"></div>
+<aside id="sidebar">
+    <div class="sidebar-section"><h6>◆ General</h6><a href="index.html" class="sidebar-link">🏠 Home</a><a href="quick-start.html" class="sidebar-link">⚡ Quick Start</a><a href="installation.html" class="sidebar-link">📦 Installation</a><a href="user-manual.html" class="sidebar-link">📖 User Manual</a></div>
+    <div class="sidebar-section"><h6>◆ Source Code</h6><a href="main-py.html" class="sidebar-link">main.py</a><a href="langadb-controllers.html" class="sidebar-link">LangaDB/controllers.py</a><a href="config.html" class="sidebar-link">config.py</a><a href="config4test.html" class="sidebar-link">config4test.py</a><a href="auth-controllers.html" class="sidebar-link" style="color:var(--accent-pink);opacity:0.6;text-decoration:line-through;" title="NOT USED"">auth/controllers.py</a><a href="auth-session.html" class="sidebar-link" style="color:var(--accent-pink);opacity:0.6;text-decoration:line-through;" title="NOT USED"">auth/session.py</a><a href="calculate-priority.html" class="sidebar-link">calculate_priority.py</a><a href="product.html" class="sidebar-link">product.py</a><a href="create-assignments.html" class="sidebar-link">create/assignments.py</a><a href="read-assignments.html" class="sidebar-link">read/assignments.py</a><a href="update-mark-as-done.html" class="sidebar-link">update/mark_as_done.py</a><a href="delete-assignment.html" class="sidebar-link">delete/assignment.py</a></div>
+    <div class="sidebar-section"><h6>◆ Configuration</h6><a href="requirements-txt.html" class="sidebar-link">requirements.txt</a><a href="pyproject-toml.html" class="sidebar-link">pyproject.toml</a><a href="ci-workflow.html" class="sidebar-link">CI/CD Workflow</a></div>
+    <div class="sidebar-section"><h6>◆ Tests</h6><a href="test-create-assignment.html" class="sidebar-link">test_create_assignment.py</a><a href="test-read-assignment.html" class="sidebar-link">test_read_assignment.py</a><a href="test-update-mark.html" class="sidebar-link">test_update_mark.py</a><a href="test-delete.html" class="sidebar-link">test_delete.py</a><a href="test-calculate-priority.html" class="sidebar-link">test_calculate_priority.py</a><a href="test-priority-level.html" class="sidebar-link active">test_priority_level.py</a></div>
+    <div class="sidebar-section"><h6>◆ Project</h6><a href="directory-structure.html" class="sidebar-link">📁 Directory Structure</a></div>
+</aside>
+<main id="main-content">
+    <h1 class="section-title">📄 test_priority_level.py</h1>
+    <div class="file-path">📁 StudySmart/tests/common/priority_calculate/test_leveling.py</div>
+    <div class="overview-box">
+        <h3>🔍 What does this file do?</h3>
+        <p>Tests the <strong>get_priority_level() function</strong> to verify that numeric scores are
+        correctly converted to human-readable labels (HIGH, MEDIUM, LOW).</p>
+    </div>
+    <h3 style="font-size:0.6rem;color:var(--accent-yellow);margin-bottom:1rem;">📝 Test Data & Assertions</h3>
+    <div class="explain-box">
+        <h4>Test Data Setup</h4>
+        <div class="code-block" style="font-size:0.6rem;"><span class="code-comment"># Assignment 0: difficulty=4, deadline=1 day away → score = 4/(1+1) = 2.0</span>
+<span class="code-comment"># Assignment 1: difficulty=2, deadline=1 day away → score = 2/(1+1) = 1.0</span>
+<span class="code-comment"># Assignment 2: difficulty=1, deadline=2 days away → score = 1/(2+1) = 0.33</span>
+
+x1 = calculate_priority_score(assignment[0])  <span class="code-comment"># = 2.0</span>
+x2 = calculate_priority_score(assignment[1])  <span class="code-comment"># = 1.0</span>
+x3 = calculate_priority_score(assignment[2])  <span class="code-comment"># = 0.33</span></div>
+        <p>Three assignments with different difficulty/deadline combinations, producing three different
+        priority scores that fall into different level categories.</p>
+    </div>
+    <div class="explain-box">
+        <h4>test_calculate_priority_level</h4>
+        <div class="code-block" style="font-size:0.6rem;"><span class="code-keyword">def</span> test_calculate_priority_level():
+    <span class="code-keyword">assert</span> get_priority_level(x1) == <span class="code-string">"HIGH"</span>      <span class="code-comment"># score 2.0 ≥ 2 → HIGH</span>
+    <span class="code-keyword">assert</span> get_priority_level(x2) == <span class="code-string">"MEDIUM"</span>   <span class="code-comment"># score 1.0 is between 1 and 2 → MEDIUM</span>
+    <span class="code-keyword">assert</span> get_priority_level(x3) == <span class="code-string">"LOW"</span>      <span class="code-comment"># score 0.33 < 1 → LOW</span></div>
+        <p>Verifies the three level boundaries:</p>
+        <p>→ Score 2.0 → <strong>"HIGH"</strong> (≥ 2)</p>
+        <p>→ Score 1.0 → <strong>"MEDIUM"</strong> (between 1 and 2)</p>
+        <p>→ Score 0.33 → <strong>"LOW"</strong> (&lt; 1)</p>
+        <p>This confirms the priority system correctly classifies assignments by urgency.</p>
+    </div>
+    <div class="overview-box" style="border-color:var(--accent-yellow);">
+        <h3 style="color:var(--accent-yellow);">🔗 Test Coverage Summary</h3>
+        <p>All 5 test files together cover the core functionality of StudySmart:</p>
+        <p>→ <strong>Create:</strong> Input validation, empty fields, invalid dates, difficulty ranges</p>
+        <p>→ <strong>Read:</strong> Filtering (done/undone/all), output formatting</p>
+        <p>→ <strong>Update:</strong> Mark complete, undo complete</p>
+        <p>→ <strong>Priority:</strong> Score calculation, level classification</p>
+        <p>This gives confidence that the application's core logic works correctly.</p>
+    </div>
+</main>
+<footer><p>StudySmart Documentation • THE HEIST • MIT License © 2026</p></footer>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="script.js"></script>
+</body>
+</html>

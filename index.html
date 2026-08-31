@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StudySmart - Home</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://unpkg.com/nes.css@2.3.0/css/nes.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <link href="styles.css" rel="stylesheet">
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="nes-navbar">
+    <div style="display:flex; align-items:center; gap:1rem;">
+        <button class="hamburger" onclick="toggleSidebar()">☰</button>
+        <a href="index.html" class="logo">⬛ StudySmart Docs</a>
+    </div>
+    <div class="nav-links">
+        <a href="index.html">HOME</a>
+        <a href="quick-start.html">QUICK START</a>
+        <a href="installation.html">INSTALL</a>
+        <a href="user-manual.html">MANUAL</a>
+        <button class="toggle-mode" onclick="toggleTheme()">☀/☾</button>
+    </div>
+</nav>
+
+<!-- OVERLAY -->
+<div class="overlay" id="overlay" onclick="toggleSidebar()"></div>
+
+<!-- SIDEBAR -->
+<aside id="sidebar">
+    <div class="sidebar-section">
+        <h6>◆ General</h6>
+        <a href="index.html" class="sidebar-link active">🏠 Home</a>
+        <a href="quick-start.html" class="sidebar-link">⚡ Quick Start</a>
+        <a href="installation.html" class="sidebar-link">📦 Installation</a>
+        <a href="user-manual.html" class="sidebar-link">📖 User Manual</a>
+    </div>
+    <div class="sidebar-section">
+        <h6>◆ Source Code</h6>
+        <a href="main-py.html" class="sidebar-link">main.py</a>
+        <a href="langadb-controllers.html" class="sidebar-link">LangaDB/controllers.py</a>
+        <a href="config.html" class="sidebar-link">config.py</a>
+        <a href="config4test.html" class="sidebar-link">config4test.py</a>
+        <a href="auth-controllers.html" class="sidebar-link" style="color:var(--accent-pink);opacity:0.6;text-decoration:line-through;" title="NOT USED"">auth/controllers.py</a>
+        <a href="auth-session.html" class="sidebar-link" style="color:var(--accent-pink);opacity:0.6;text-decoration:line-through;" title="NOT USED"">auth/session.py</a>
+        <a href="calculate-priority.html" class="sidebar-link">calculate_priority.py</a>
+        <a href="product.html" class="sidebar-link">product.py</a>
+        <a href="create-assignments.html" class="sidebar-link">create/assignments.py</a>
+        <a href="read-assignments.html" class="sidebar-link">read/assignments.py</a>
+        <a href="update-mark-as-done.html" class="sidebar-link">update/mark_as_done.py</a>
+        <a href="delete-assignment.html" class="sidebar-link">delete/assignment.py</a>
+    </div>
+    <div class="sidebar-section">
+        <h6>◆ Configuration</h6>
+        <a href="requirements-txt.html" class="sidebar-link">requirements.txt</a>
+        <a href="pyproject-toml.html" class="sidebar-link">pyproject.toml</a>
+        <a href="ci-workflow.html" class="sidebar-link">CI/CD Workflow</a>
+    </div>
+    <div class="sidebar-section">
+        <h6>◆ Tests</h6>
+        <a href="test-create-assignment.html" class="sidebar-link">test_create_assignment.py</a>
+        <a href="test-read-assignment.html" class="sidebar-link">test_read_assignment.py</a>
+        <a href="test-update-mark.html" class="sidebar-link">test_update_mark.py</a><a href="test-delete.html" class="sidebar-link">test_delete.py</a>
+        <a href="test-calculate-priority.html" class="sidebar-link">test_calculate_priority.py</a>
+        <a href="test-priority-level.html" class="sidebar-link">test_priority_level.py</a>
+    </div>
+    <div class="sidebar-section"><h6>◆ Project</h6><a href="directory-structure.html" class="sidebar-link">📁 Directory Structure</a></div>
+</aside>
+
+<!-- MAIN CONTENT -->
+<main id="main-content">
+    <!-- HERO -->
+    <div class="hero-section">
+        <h1>⬛ StudySmart <span class="blink">_</span></h1>
+        <p>A terminal-based assignment management system for students.<br>
+        Built with Python, powered by a custom JSON database engine (LangaDB).<br>
+        Manage your assignments, track priorities, and crush your deadlines!</p>
+        <a href="quick-start.html" class="nes-btn is-primary" style="font-size:0.5rem;">▶ PLAY</a>
+    </div>
+
+    <!-- FEATURES -->
+    <h2 class="section-title">★ Features</h2>
+    <div class="row g-3 mb-5">
+        <div class="col-md-4">
+            <div class="feature-card">
+                <h3>📋 CRUD Operations</h3>
+                <p>Create, Read, Update, Delete assignments with full validation.</p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="feature-card">
+                <h3>🎯 Smart Priority</h3>
+                <p>Automatic priority scoring based on difficulty and deadline.</p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="feature-card">
+                <h3>🔐 User Auth</h3>
+                <p>Sign up, Log in, Session management with password hashing.</p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="feature-card">
+                <h3>📊 Study Summary</h3>
+                <p>View completion rate and track your progress over time.</p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="feature-card">
+                <h3>💾 LangaDB</h3>
+                <p>Custom JSON-based database with auto-increment IDs.</p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="feature-card">
+                <h3>✅ CI/CD</h3>
+                <p>GitHub Actions testing across Python 3.9 - 3.13.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- ARCHITECTURE -->
+    <h2 class="section-title">◆ Architecture</h2>
+    <div class="arch-box">
+StudySmart/
+├── main.py                    ← Entry point
+├── requirements.txt           ← Dependencies
+├── pyproject.toml             ← Pytest config
+├── src/
+│   ├── LangaDB/
+│   │   └── controllers.py    ← JSON database engine
+│   ├── data_processing_module/
+│   │   ├── config.py         ← DB instances (Users, Assignments)
+│   │   └── config4test.py    ← Test DB instances
+│   ├── data/
+│   │   ├── users.json        ← User data
+│   │   ├── assignments.json  ← Assignment data
+│   │   └── session.txt       ← Current session
+│   └── core/
+│       ├── authentication/ (NOT USED)
+│       │   ├── controllers.py ← SignUp, LogIn, LogOut
+│       │   └── session.py     ← Session save/load/clear
+│       ├── common/
+│       │   ├── calculate_priority.py ← Priority algorithm
+│       │   └── product.py            ← Main menu (main loop)
+│       ├── create/
+│       │   └── assignments.py ← Add assignment
+│       ├── read/
+│       │   └── assignments.py ← View assignments + summary
+│       ├── update/
+│       │   └── mark_as_done.py← Mark complete / undo
+│       └── delete/
+│           └── assignment.py  ← Delete assignment
+└── tests/                     ← Pytest test suite</div>
+
+    <!-- TECH STACK -->
+    <h2 class="section-title">◈ Tech Stack</h2>
+    <div class="row g-3 mb-5">
+        <div class="col-md-3">
+            <div class="tech-item">
+                <h5>Python 3.9+</h5>
+                <p>Core language for the entire application.</p>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="tech-item">
+                <h5>JSON</h5>
+                <p>File-based data storage via LangaDB.</p>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="tech-item">
+                <h5>Pytest</h5>
+                <p>Unit testing framework with monkeypatch.</p>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="tech-item">
+                <h5>SHA-256</h5>
+                <p>Password hashing for user authentication. <span style="color:var(--accent-pink);">⚠️ Not used in current version.</span></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- TEAM -->
+    <h2 class="section-title">♥ Team: THE HEIST</h2>
+    <div class="row g-3 mb-4">
+        <div class="col-md-4">
+            <div class="team-card">
+                <h4>THE HEIST</h4>
+                <p>Group of 5 students<br>Programming Fundamental Course<br>MIT License © 2026</p>
+            </div>
+        </div>
+        <div class="col-md-8">
+            <div class="nes-container" style="padding:1.2rem;">
+                <p style="font-size:0.45rem; line-height:2.2; color:var(--text-secondary);">
+                    This documentation website was created to provide a comprehensive guide
+                    to the StudySmart project. Every line of code is explained in detail so that
+                    even beginners can understand how the application works.<br><br>
+                    Navigate using the sidebar to explore each source file, or start with
+                    <a href="quick-start.html" style="color:var(--accent-green);">Quick Start</a>
+                    to get the app running in minutes!
+                </p>
+            </div>
+        </div>
+    </div>
+</main>
+
+<!-- FOOTER -->
+<footer>
+    <p>StudySmart Documentation • THE HEIST • MIT License © 2026</p>
+    <p>Built with Bootstrap 5 • NES.css • Press Start 2P</p>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="script.js"></script>
+</body>
+</html>

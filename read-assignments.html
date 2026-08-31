@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StudySmart - read/assignments.py</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://unpkg.com/nes.css@2.3.0/css/nes.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <link href="styles.css" rel="stylesheet">
+</head>
+<body>
+<nav class="nes-navbar"><div style="display:flex;align-items:center;gap:1rem;"><button class="hamburger" onclick="toggleSidebar()">☰</button><a href="index.html" class="logo">⬛ StudySmart Docs</a></div><div class="nav-links"><a href="index.html">HOME</a><a href="quick-start.html">QUICK START</a><a href="installation.html">INSTALL</a><a href="user-manual.html">MANUAL</a><button class="toggle-mode" onclick="toggleTheme()">☀/☾</button></div></nav>
+<div class="overlay" id="overlay" onclick="toggleSidebar()"></div>
+<aside id="sidebar">
+    <div class="sidebar-section"><h6>◆ General</h6><a href="index.html" class="sidebar-link">🏠 Home</a><a href="quick-start.html" class="sidebar-link">⚡ Quick Start</a><a href="installation.html" class="sidebar-link">📦 Installation</a><a href="user-manual.html" class="sidebar-link">📖 User Manual</a></div>
+    <div class="sidebar-section"><h6>◆ Source Code</h6><a href="main-py.html" class="sidebar-link">main.py</a><a href="langadb-controllers.html" class="sidebar-link">LangaDB/controllers.py</a><a href="config.html" class="sidebar-link">config.py</a><a href="config4test.html" class="sidebar-link">config4test.py</a><a href="auth-controllers.html" class="sidebar-link" style="color:var(--accent-pink);opacity:0.6;text-decoration:line-through;" title="NOT USED"">auth/controllers.py</a><a href="auth-session.html" class="sidebar-link" style="color:var(--accent-pink);opacity:0.6;text-decoration:line-through;" title="NOT USED"">auth/session.py</a><a href="calculate-priority.html" class="sidebar-link">calculate_priority.py</a><a href="product.html" class="sidebar-link">product.py</a><a href="create-assignments.html" class="sidebar-link">create/assignments.py</a><a href="read-assignments.html" class="sidebar-link active">read/assignments.py</a><a href="update-mark-as-done.html" class="sidebar-link">update/mark_as_done.py</a><a href="delete-assignment.html" class="sidebar-link">delete/assignment.py</a></div>
+    <div class="sidebar-section"><h6>◆ Configuration</h6><a href="requirements-txt.html" class="sidebar-link">requirements.txt</a><a href="pyproject-toml.html" class="sidebar-link">pyproject.toml</a><a href="ci-workflow.html" class="sidebar-link">CI/CD Workflow</a></div>
+    <div class="sidebar-section"><h6>◆ Tests</h6><a href="test-create-assignment.html" class="sidebar-link">test_create_assignment.py</a><a href="test-read-assignment.html" class="sidebar-link">test_read_assignment.py</a><a href="test-update-mark.html" class="sidebar-link">test_update_mark.py</a><a href="test-delete.html" class="sidebar-link">test_delete.py</a><a href="test-calculate-priority.html" class="sidebar-link">test_calculate_priority.py</a><a href="test-priority-level.html" class="sidebar-link">test_priority_level.py</a></div>
+    <div class="sidebar-section"><h6>◆ Project</h6><a href="directory-structure.html" class="sidebar-link">📁 Directory Structure</a></div>
+</aside>
+<main id="main-content">
+    <h1 class="section-title">📄 read/assignments.py</h1>
+    <div class="file-path">📁 StudySmart/src/core/read/assignments.py</div>
+    <div class="overview-box">
+        <h3>🔍 What does this file do?</h3>
+        <p>This file handles <strong>viewing and displaying assignments</strong>. It provides functions
+        to filter assignments (done, undone, or all), sort them by priority, display them as a formatted
+        table, and show a study summary with completion statistics.</p>
+    </div>
+    <h3 style="font-size:0.6rem;color:var(--accent-yellow);margin-bottom:1rem;">📝 Full Source Code</h3>
+    <div class="code-block"><span class="code-keyword">from</span> src.data_processing_module.config <span class="code-keyword">import</span> Assignments
+
+<span class="code-keyword">def</span> view_order_by_undone(Assignments=Assignments, sort_key=<span class="code-string">"score"</span>, reverse=<span class="code-keyword">True</span>, session=<span class="code-keyword">None</span>):
+    assignments = Assignments.all(<span class="code-string">'assignments'</span>)
+    a = []
+    <span class="code-keyword">for</span> i <span class="code-keyword">in</span> assignments:
+        <span class="code-keyword">if</span> i.get(<span class="code-string">"completed"</span>) == <span class="code-keyword">False</span>:
+            a.append(i)
+    <span class="code-keyword">return</span> sorted(a, key=<span class="code-keyword">lambda</span> x: x[sort_key], reverse=reverse)
+
+<span class="code-keyword">def</span> view_order_by_done(Assignments=Assignments, sort_key=<span class="code-string">"score"</span>, reverse=<span class="code-keyword">True</span>, session=<span class="code-keyword">None</span>):
+    assignments = Assignments.all(<span class="code-string">'assignments'</span>)
+    a = []
+    <span class="code-keyword">for</span> i <span class="code-keyword">in</span> assignments:
+        <span class="code-keyword">if</span> i.get(<span class="code-string">"completed"</span>) == <span class="code-keyword">True</span>:
+            a.append(i)
+    <span class="code-keyword">return</span> sorted(a, key=<span class="code-keyword">lambda</span> x: x.get(sort_key,0), reverse=reverse)
+
+<span class="code-keyword">def</span> view_order_all(Assignments=Assignments, sort_key=<span class="code-string">"score"</span>, reverse=<span class="code-keyword">True</span>, session=<span class="code-keyword">None</span>):
+    assignments = Assignments.all(<span class="code-string">'assignments'</span>)
+    <span class="code-keyword">return</span> sorted(assignments, key=<span class="code-keyword">lambda</span> x: x.get(sort_key,0), reverse=reverse)
+
+<span class="code-keyword">def</span> view_assignments(Assignments=Assignments, assignments=<span class="code-keyword">None</span>):
+    <span class="code-keyword">if</span> len(assignments) == 0 <span class="code-keyword">or</span> assignments == <span class="code-keyword">None</span>:
+        print(<span class="code-string">"No assignments found"</span>)
+    <span class="code-keyword">else</span>:
+        header = [<span class="code-string">"ID"</span>, <span class="code-string">"Assignment Name"</span>, <span class="code-string">"Module"</span>, <span class="code-string">"Deadline"</span>, <span class="code-string">"Difficulty"</span>, <span class="code-string">"Score"</span>, <span class="code-string">"Completed"</span>]
+        print(<span class="code-string">"{:&lt;5} {:&lt;20} {:&lt;15} {:&lt;12} {:&lt;15} {:&lt;8} {:&lt;10}"</span>.format(*header))
+        print(<span class="code-string">"-"</span> * 90)
+        <span class="code-keyword">for</span> assignment <span class="code-keyword">in</span> assignments:
+            row = [
+                assignment.get(<span class="code-string">"id"</span>, <span class="code-string">""</span>),
+                assignment.get(<span class="code-string">"assignment_name"</span>, <span class="code-string">""</span>),
+                assignment.get(<span class="code-string">"module_name"</span>, <span class="code-string">""</span>),
+                assignment.get(<span class="code-string">"deadline"</span>, <span class="code-string">""</span>),
+                assignment.get(<span class="code-string">"difficulty"</span>, <span class="code-string">""</span>),
+                round(assignment.get(<span class="code-string">"score"</span>, 0), 2),
+                <span class="code-string">"Done"</span> <span class="code-keyword">if</span> assignment.get(<span class="code-string">"completed"</span>, <span class="code-keyword">True</span>) <span class="code-keyword">else</span> <span class="code-string">"Not Done"</span>
+            ]
+            print(<span class="code-string">"{:&lt;5} {:&lt;20} {:&lt;15} {:&lt;12} {:&lt;15} {:&lt;8} {:&lt;10}"</span>.format(*row))
+
+<span class="code-keyword">def</span> show_study_summary(assignments):
+    total_assignments = len(assignments)
+    completed_count = 0
+    incomplete_count = 0
+    <span class="code-keyword">for</span> assignment <span class="code-keyword">in</span> assignments:
+        <span class="code-keyword">if</span> assignment.get(<span class="code-string">"completed"</span>):
+            completed_count = completed_count + 1
+        <span class="code-keyword">else</span>:
+            incomplete_count = incomplete_count + 1
+    <span class="code-keyword">if</span> total_assignments == 0:
+        completion_rate = 0
+    <span class="code-keyword">else</span>:
+        completion_rate = round((completed_count / total_assignments) * 100, 2)
+    print(<span class="code-string">"Total assignments:"</span>, total_assignments)
+    print(<span class="code-string">"Completed:"</span>, completed_count)
+    print(<span class="code-string">"Incomplete:"</span>, incomplete_count)
+    print(f<span class="code-string">"Completion rate: {completion_rate}%"</span>)</div>
+    <h3 style="font-size:0.6rem;color:var(--accent-yellow);margin:1.5rem 0 1rem;">📖 Key Parts Explained</h3>
+    <div class="explain-box">
+        <h4>Filtering Functions (view_order_by_undone, view_order_by_done, view_order_all)</h4>
+        <p>All three work similarly: load all assignments, filter by completion status, then sort
+        by score. The <code>lambda</code> function tells Python to sort by the "score" field.
+        <code>reverse=True</code> puts the highest scores first (most urgent first).</p>
+    </div>
+    <div class="explain-box">
+        <h4>view_assignments() — Table Display</h4>
+        <p>Prints assignments as a formatted table. The format specifiers like <code>{:&lt;20}</code>
+        mean "left-align in a 20-character wide column". This creates neat, aligned columns.</p>
+        <p><code>"Done" if completed else "Not Done"</code> — A ternary expression that converts
+        the boolean <code>completed</code> field into readable text.</p>
+    </div>
+    <div class="explain-box">
+        <h4>show_study_summary()</h4>
+        <p>Counts completed vs incomplete assignments and calculates the completion percentage.
+        Handles the edge case of zero assignments (to avoid division by zero).</p>
+    </div>
+</main>
+<footer><p>StudySmart Documentation • THE HEIST • MIT License © 2026</p></footer>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="script.js"></script>
+</body>
+</html>

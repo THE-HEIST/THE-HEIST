@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StudySmart - User Manual</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://unpkg.com/nes.css@2.3.0/css/nes.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <link href="styles.css" rel="stylesheet">
+</head>
+<body>
+
+<nav class="nes-navbar">
+    <div style="display:flex;align-items:center;gap:1rem;">
+        <button class="hamburger" onclick="toggleSidebar()">☰</button>
+        <a href="index.html" class="logo">⬛ StudySmart Docs</a>
+    </div>
+    <div class="nav-links">
+        <a href="index.html">HOME</a>
+        <a href="quick-start.html">QUICK START</a>
+        <a href="installation.html">INSTALL</a>
+        <a href="user-manual.html">MANUAL</a>
+        <button class="toggle-mode" onclick="toggleTheme()">☀/☾</button>
+    </div>
+</nav>
+<div class="overlay" id="overlay" onclick="toggleSidebar()"></div>
+<aside id="sidebar">
+    <div class="sidebar-section"><h6>◆ General</h6>
+        <a href="index.html" class="sidebar-link">🏠 Home</a>
+        <a href="quick-start.html" class="sidebar-link">⚡ Quick Start</a>
+        <a href="installation.html" class="sidebar-link">📦 Installation</a>
+        <a href="user-manual.html" class="sidebar-link active">📖 User Manual</a>
+    </div>
+    <div class="sidebar-section"><h6>◆ Source Code</h6>
+        <a href="main-py.html" class="sidebar-link">main.py</a>
+        <a href="langadb-controllers.html" class="sidebar-link">LangaDB/controllers.py</a>
+        <a href="config.html" class="sidebar-link">config.py</a>
+        <a href="config4test.html" class="sidebar-link">config4test.py</a>
+        <a href="auth-controllers.html" class="sidebar-link" style="color:var(--accent-pink);opacity:0.6;text-decoration:line-through;" title="NOT USED"">auth/controllers.py</a>
+        <a href="auth-session.html" class="sidebar-link" style="color:var(--accent-pink);opacity:0.6;text-decoration:line-through;" title="NOT USED"">auth/session.py</a>
+        <a href="calculate-priority.html" class="sidebar-link">calculate_priority.py</a>
+        <a href="product.html" class="sidebar-link">product.py</a>
+        <a href="create-assignments.html" class="sidebar-link">create/assignments.py</a>
+        <a href="read-assignments.html" class="sidebar-link">read/assignments.py</a>
+        <a href="update-mark-as-done.html" class="sidebar-link">update/mark_as_done.py</a>
+        <a href="delete-assignment.html" class="sidebar-link">delete/assignment.py</a>
+    </div>
+    <div class="sidebar-section"><h6>◆ Configuration</h6>
+        <a href="requirements-txt.html" class="sidebar-link">requirements.txt</a>
+        <a href="pyproject-toml.html" class="sidebar-link">pyproject.toml</a>
+        <a href="ci-workflow.html" class="sidebar-link">CI/CD Workflow</a>
+    </div>
+    <div class="sidebar-section"><h6>◆ Tests</h6>
+        <a href="test-create-assignment.html" class="sidebar-link">test_create_assignment.py</a>
+        <a href="test-read-assignment.html" class="sidebar-link">test_read_assignment.py</a>
+        <a href="test-update-mark.html" class="sidebar-link">test_update_mark.py</a><a href="test-delete.html" class="sidebar-link">test_delete.py</a>
+        <a href="test-calculate-priority.html" class="sidebar-link">test_calculate_priority.py</a>
+        <a href="test-priority-level.html" class="sidebar-link">test_priority_level.py</a>
+    </div>
+    <div class="sidebar-section"><h6>◆ Project</h6><a href="directory-structure.html" class="sidebar-link">📁 Directory Structure</a></div>
+</aside>
+
+<main id="main-content">
+    <h1 class="section-title">📖 User Manual</h1>
+    <p style="font-size:0.5rem;color:var(--text-secondary);line-height:2.2;margin-bottom:2rem;">
+        A complete guide to using every feature of StudySmart.
+    </p>
+
+    <!-- OVERVIEW -->
+    <div class="step-box">
+        <h3>🎮 Main Menu Overview</h3>
+        <p>When you start the application, you see the main menu. Each number corresponds to a feature:</p>
+        <div class="menu-output">No    Function Name
+---------------------------------------------
+1     View Assignments
+2     Add Assignment
+3     Mark Assignment as Done
+4     Undo Mark Assignment as Done
+5     Show Study Summary
+6     Clear Terminal
+0     Exit</div>
+        <p>Type the number of the feature you want and press Enter. Type <code>0</code> to exit the program.</p>
+    </div>
+
+    <!-- ADD ASSIGNMENT -->
+    <div class="step-box">
+        <h3>➕ Adding an Assignment (Option 2)</h3>
+        <p>Choose option 2 from the main menu. You will be asked to enter details about your assignment:</p>
+
+        <div class="menu-output">Assignment name: <span style="color:var(--accent-yellow);">Math Homework</span>
+Module: <span style="color:var(--accent-yellow);">Algebra</span>
+Deadline (Ex: yyyy-mm-dd): <span style="color:var(--accent-yellow);">2026-09-15</span>
+Difficulty level (1 to 5): <span style="color:var(--accent-yellow);">3</span></div>
+
+        <p><strong>Fields explained:</strong></p>
+        <p>→ <strong>Assignment name:</strong> A short name for your task (e.g., "Math Homework", "Essay Draft")</p>
+        <p>→ <strong>Module:</strong> The subject or course it belongs to (e.g., "Algebra", "History")</p>
+        <p>→ <strong>Deadline:</strong> When it's due, in the format <code>YYYY-MM-DD</code> (e.g., 2026-09-15)</p>
+        <p>→ <strong>Difficulty level:</strong> How hard it is, from 1 (easy) to 5 (very hard)</p>
+
+        <div class="info-box">
+            <h4>💡 Important Notes</h4>
+            <p>→ The name, module, and deadline fields cannot be left empty.</p>
+            <p>→ The difficulty must be a number between 1 and 5.</p>
+            <p>→ The deadline must be in the format YYYY-MM-DD (e.g., 2026-12-31).</p>
+            <p>→ After adding, the assignment is automatically assigned a priority score.</p>
+        </div>
+
+        <p><strong>What happens behind the scenes:</strong></p>
+        <p>When you add an assignment, the program:</p>
+        <p>1. Checks that all fields are valid (not empty, correct format)</p>
+        <p>2. Calculates a priority score: <code>score = difficulty / (days_remaining + 1)</code></p>
+        <p>3. Assigns a priority level: HIGH, MEDIUM, LOW, or OVERDUE</p>
+        <p>4. Saves the assignment to the JSON database file</p>
+    </div>
+
+    <!-- VIEW ASSIGNMENTS -->
+    <div class="step-box">
+        <h3>📋 Viewing Assignments (Option 1)</h3>
+        <p>Choose option 1 to view your assignments. You get three sub-options:</p>
+
+        <div class="menu-output">No    Function Name
+---------------------------------------------
+1     View Undone Assignments
+2     View Done Assignments
+3     View All Assignments</div>
+
+        <p>Each option shows a table with these columns:</p>
+        <div class="menu-output">ID    Assignment Name      Module          Deadline    Difficulty      Score   Completed
+------------------------------------------------------------------------------------------
+1     Math Homework         Algebra         2026-09-15  3               1.00    Not Done
+2     Essay Draft           English         2026-09-20  4               0.80    Done
+3     Lab Report            Physics         2026-09-10  5               2.50    Not Done</div>
+
+        <p><strong>Column meanings:</strong></p>
+        <p>→ <strong>ID:</strong> A unique number for each assignment (auto-assigned)</p>
+        <p>→ <strong>Score:</strong> The priority score (higher = more urgent)</p>
+        <p>→ <strong>Completed:</strong> "Done" or "Not Done"</p>
+        <p>Assignments are sorted by score in descending order (most urgent first).</p>
+    </div>
+
+    <!-- MARK DONE -->
+    <div class="step-box">
+        <h3>✅ Marking an Assignment as Done (Option 3)</h3>
+        <p>Choose option 3 to mark an assignment as completed:</p>
+        <div class="code-block"><span class="code-comment"># First, view undone assignments</span>
+ID    Assignment Name      Module          Deadline    Difficulty      Score   Completed
+------------------------------------------------------------------------------------------
+1     Math Homework         Algebra         2026-09-15  3               1.00    Not Done
+
+<span class="code-comment"># Enter the assignment number to mark as completed</span>
+Enter the assignment number to mark as completed: <span class="code-cmd">1</span>
+
+<span class="code-comment"># Result</span>
+Assignment marked as completed.</div>
+        <p>Enter the <strong>ID number</strong> of the assignment you want to mark. Only undone assignments can be marked.</p>
+    </div>
+
+    <!-- UNDO MARK -->
+    <div class="step-box">
+        <h3>↩ Undo Marking as Done (Option 4)</h3>
+        <p>Choose option 4 to undo a completed assignment (mark it as not done again):</p>
+        <div class="code-block"><span class="code-comment"># View done assignments</span>
+ID    Assignment Name      Module          Deadline    Difficulty      Score   Completed
+------------------------------------------------------------------------------------------
+2     Essay Draft           English         2026-09-20  4               0.80    Done
+
+<span class="code-comment"># Enter the assignment number to undo</span>
+Enter the assignment number to undo mark as completed: <span class="code-cmd">2</span>
+
+<span class="code-comment"># Result</span>
+Assignment marked as not completed.</div>
+    </div>
+
+    <!-- STUDY SUMMARY -->
+    <div class="step-box">
+        <h3>📊 Study Summary (Option 5)</h3>
+        <p>Choose option 5 to see your progress statistics:</p>
+        <div class="menu-output">Total assignments: 5
+Completed: 2
+Incomplete: 3
+Completion rate: 40.0%</div>
+        <p>This shows how many assignments you've completed vs. how many are still pending.</p>
+    </div>
+
+    <!-- PRIORITY SYSTEM -->
+    <div class="step-box" style="border-color:var(--accent-cyan);">
+        <h3 style="color:var(--accent-cyan);">🎯 How the Priority System Works</h3>
+        <p>StudySmart automatically calculates how urgent each assignment is using a formula:</p>
+
+        <div class="code-block"><span class="code-comment"># The priority formula</span>
+priority_score = difficulty / (days_remaining + 1)
+
+<span class="code-comment"># Example: Hard assignment (5) due tomorrow (1 day left)</span>
+score = 5 / (1 + 1) = <span class="code-cmd">2.5</span>  → <span style="color:var(--accent-pink);">HIGH</span>
+
+<span class="code-comment"># Example: Easy assignment (2) due in 10 days</span>
+score = 2 / (10 + 1) = <span class="code-cmd">0.18</span>  → <span style="color:var(--accent-green);">LOW</span></div>
+
+        <p><strong>Priority Levels:</strong></p>
+        <p>→ <span style="color:var(--accent-pink);">HIGH</span> — Score ≥ 2 (urgent, do this first!)</p>
+        <p>→ <span style="color:var(--accent-yellow);">MEDIUM</span> — Score between 1 and 2</p>
+        <p>→ <span style="color:var(--accent-green);">LOW</span> — Score &lt; 1 (still have time)</p>
+        <p>→ <span style="color:var(--accent-pink);">OVERDUE</span> — Score = 99999 (deadline has passed!)</p>
+
+        <div class="warn-box">
+            <h4>⚠ Recalculation</h4>
+            <p>The priority scores are automatically recalculated every time you start the program.
+            This ensures the scores reflect the current date.</p>
+        </div>
+    </div>
+
+    <!-- DATA STORAGE -->
+    <div class="step-box">
+        <h3>💾 Where is my data saved?</h3>
+        <p>All your data is saved in JSON files inside the <code>src/data/</code> folder:</p>
+        <p>→ <code>users.json</code> — Stores your account (username + encrypted password)</p>
+        <p>→ <code>assignments.json</code> — Stores all your assignments</p>
+        <p>→ <code>session.txt</code> — Stores who is currently logged in</p>
+
+        <div class="info-box">
+            <h4>💡 Tip</h4>
+            <p>Don't delete these files unless you want to start fresh. They contain all your data!</p>
+        </div>
+    </div>
+
+    <!-- KEYBOARD TIPS -->
+    <div class="step-box">
+        <h3>⌨ Input Tips</h3>
+        <p>→ Always press <strong>Enter</strong> after typing your input.</p>
+        <p>→ Use numbers (not words) to select menu options.</p>
+        <p>→ Dates must be in format <code>YYYY-MM-DD</code> (e.g., 2026-12-31).</p>
+        <p>→ Difficulty must be a whole number from 1 to 5.</p>
+        <p>→ If you type something invalid, the program will ask you to try again.</p>
+        <p>→ Use option 6 (Clear Terminal) to clean up your screen.</p>
+    </div>
+</main>
+
+<footer>
+    <p>StudySmart Documentation • THE HEIST • MIT License © 2026</p>
+    <p>Built with Bootstrap 5 • NES.css • Press Start 2P</p>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="script.js"></script>
+</body>
+</html>

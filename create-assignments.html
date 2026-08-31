@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StudySmart - create/assignments.py</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://unpkg.com/nes.css@2.3.0/css/nes.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <link href="styles.css" rel="stylesheet">
+</head>
+<body>
+<nav class="nes-navbar"><div style="display:flex;align-items:center;gap:1rem;"><button class="hamburger" onclick="toggleSidebar()">☰</button><a href="index.html" class="logo">⬛ StudySmart Docs</a></div><div class="nav-links"><a href="index.html">HOME</a><a href="quick-start.html">QUICK START</a><a href="installation.html">INSTALL</a><a href="user-manual.html">MANUAL</a><button class="toggle-mode" onclick="toggleTheme()">☀/☾</button></div></nav>
+<div class="overlay" id="overlay" onclick="toggleSidebar()"></div>
+<aside id="sidebar">
+    <div class="sidebar-section"><h6>◆ General</h6><a href="index.html" class="sidebar-link">🏠 Home</a><a href="quick-start.html" class="sidebar-link">⚡ Quick Start</a><a href="installation.html" class="sidebar-link">📦 Installation</a><a href="user-manual.html" class="sidebar-link">📖 User Manual</a></div>
+    <div class="sidebar-section"><h6>◆ Source Code</h6><a href="main-py.html" class="sidebar-link">main.py</a><a href="langadb-controllers.html" class="sidebar-link">LangaDB/controllers.py</a><a href="config.html" class="sidebar-link">config.py</a><a href="config4test.html" class="sidebar-link">config4test.py</a><a href="auth-controllers.html" class="sidebar-link" style="color:var(--accent-pink);opacity:0.6;text-decoration:line-through;" title="NOT USED"">auth/controllers.py</a><a href="auth-session.html" class="sidebar-link" style="color:var(--accent-pink);opacity:0.6;text-decoration:line-through;" title="NOT USED"">auth/session.py</a><a href="calculate-priority.html" class="sidebar-link">calculate_priority.py</a><a href="product.html" class="sidebar-link">product.py</a><a href="create-assignments.html" class="sidebar-link active">create/assignments.py</a><a href="read-assignments.html" class="sidebar-link">read/assignments.py</a><a href="update-mark-as-done.html" class="sidebar-link">update/mark_as_done.py</a><a href="delete-assignment.html" class="sidebar-link">delete/assignment.py</a></div>
+    <div class="sidebar-section"><h6>◆ Configuration</h6><a href="requirements-txt.html" class="sidebar-link">requirements.txt</a><a href="pyproject-toml.html" class="sidebar-link">pyproject.toml</a><a href="ci-workflow.html" class="sidebar-link">CI/CD Workflow</a></div>
+    <div class="sidebar-section"><h6>◆ Tests</h6><a href="test-create-assignment.html" class="sidebar-link">test_create_assignment.py</a><a href="test-read-assignment.html" class="sidebar-link">test_read_assignment.py</a><a href="test-update-mark.html" class="sidebar-link">test_update_mark.py</a><a href="test-delete.html" class="sidebar-link">test_delete.py</a><a href="test-calculate-priority.html" class="sidebar-link">test_calculate_priority.py</a><a href="test-priority-level.html" class="sidebar-link">test_priority_level.py</a></div>
+    <div class="sidebar-section"><h6>◆ Project</h6><a href="directory-structure.html" class="sidebar-link">📁 Directory Structure</a></div>
+</aside>
+<main id="main-content">
+    <h1 class="section-title">📄 create/assignments.py</h1>
+    <div class="file-path">📁 StudySmart/src/core/create/assignments.py</div>
+    <div class="overview-box">
+        <h3>🔍 What does this file do?</h3>
+        <p>This file handles <strong>adding new assignments</strong> to the system. It collects all
+        the details from the user (name, module, deadline, difficulty), validates the input, calculates
+        the priority score, and saves the assignment to the database. It includes robust input validation
+        — empty fields are rejected, invalid dates are caught, and difficulty must be 1-5.</p>
+    </div>
+    <h3 style="font-size:0.6rem;color:var(--accent-yellow);margin-bottom:1rem;">📝 Full Source Code</h3>
+    <div class="code-block"><span class="code-keyword">from</span> src.data_processing_module.config <span class="code-keyword">import</span> Assignments, Users
+<span class="code-keyword">from</span> src.core.common.calculate_priority <span class="code-keyword">import</span> *
+<span class="code-keyword">from</span> datetime <span class="code-keyword">import</span> datetime, timedelta
+
+<span class="code-keyword">def</span> add_assignment(Assignments=Assignments, Users=Users, test=<span class="code-keyword">None</span>):
+    assignment_name = input(<span class="code-string">"Assignment name:"</span>)
+    <span class="code-keyword">while</span> assignment_name == <span class="code-string">""</span>:
+        print(<span class="code-string">"Assignment name cannot be empty!"</span>)
+        assignment_name = input(<span class="code-string">"Assignment name: "</span>)
+
+    module_name = input(<span class="code-string">"Module:"</span>)
+    <span class="code-keyword">while</span> module_name == <span class="code-string">""</span>:
+        print(<span class="code-string">"Module cannot be empty!"</span>)
+        module_name = input(<span class="code-string">"Module:"</span>)
+
+    deadline = input(<span class="code-string">"Deadline (Ex: yyyy-mm-dd):"</span>)
+    <span class="code-keyword">while</span> deadline == <span class="code-string">""</span>:
+        print(<span class="code-string">"Deadline cannot be empty!"</span>)
+        deadline = input(<span class="code-string">"Deadline (Ex: yyyy-mm-dd): "</span>)
+
+    <span class="code-keyword">while True</span>:
+        <span class="code-keyword">try</span>:
+            difficulty = int(input(<span class="code-string">"Difficulty level (1 to 5):"</span>))
+            <span class="code-keyword">break</span>
+        <span class="code-keyword">except</span> ValueError:
+            print(<span class="code-string">"Invalid input! Please enter a valid integer for difficulty level."</span>)
+            <span class="code-keyword">return</span> 400
+
+    <span class="code-keyword">while True</span>:
+        <span class="code-keyword">try</span>:
+            days_remaining = datetime.strptime(deadline, <span class="code-string">"%Y-%m-%d"</span>).date() - datetime.now().date()
+            days_remaining = days_remaining.days
+            <span class="code-keyword">break</span>
+        <span class="code-keyword">except</span> ValueError:
+            deadline = input(<span class="code-string">"Invalid date format! Please enter the deadline in the format yyyy-mm-dd:"</span>)
+            <span class="code-keyword">return</span> 400
+
+    <span class="code-keyword">while True</span>:
+        <span class="code-keyword">while</span> difficulty &lt; 1 <span class="code-keyword">or</span> difficulty > 5:
+            print(<span class="code-string">"Please enter level from 1 to 5 !"</span>)
+            difficulty = int(input(<span class="code-string">"Difficulty level:"</span>))
+        <span class="code-keyword">break</span>
+
+    deadline = datetime.strptime(deadline, <span class="code-string">"%Y-%m-%d"</span>).date()
+
+    assignment = {
+        <span class="code-string">"assignment_name"</span>: assignment_name,
+        <span class="code-string">"module_name"</span>: module_name,
+        <span class="code-string">"deadline"</span>: deadline.strftime(<span class="code-string">"%Y-%m-%d"</span>),
+        <span class="code-string">"difficulty"</span>: difficulty,
+        <span class="code-string">"completed"</span>: <span class="code-keyword">False</span>,
+    }
+    assignment[<span class="code-string">"score"</span>] = calculate_priority_score(assignment)
+    assignment[<span class="code-string">"level"</span>] = get_priority_level(assignment[<span class="code-string">"score"</span>])
+
+    Assignments.add(<span class="code-string">"assignments"</span>, assignment)
+    <span class="code-keyword">return</span> 200</div>
+    <h3 style="font-size:0.6rem;color:var(--accent-yellow);margin:1.5rem 0 1rem;">📖 Key Parts Explained</h3>
+    <div class="explain-box">
+        <h4>Input Collection with Validation</h4>
+        <p>Each field uses a <code>while</code> loop that keeps asking until a non-empty value is
+        provided. This is a simple but effective way to ensure no field is left blank.</p>
+        <p><strong>Pattern:</strong> Ask → Check if empty → If empty, show error and ask again</p>
+    </div>
+    <div class="explain-box">
+        <h4>Difficulty Validation (try/except)</h4>
+        <p><code>int(input(...))</code> is wrapped in <code>try/except ValueError</code>. If the user
+        types "abc" instead of a number, Python would crash. The <code>except</code> catches this
+        and returns error code 400.</p>
+    </div>
+    <div class="explain-box">
+        <h4>Date Validation</h4>
+        <p><code>datetime.strptime(deadline, "%Y-%m-%d")</code> tries to parse the date. If the format
+        is wrong (e.g., "31-12-2024" instead of "2024-12-31"), it raises a ValueError which is caught.</p>
+    </div>
+    <div class="explain-box">
+        <h4>Building the Assignment Dictionary</h4>
+        <p>Creates a dictionary with all the fields, then calculates the priority score and level
+        before saving. The assignment starts with <code>"completed": False</code> (not done yet).</p>
+    </div>
+    <div class="explain-box">
+        <h4>Return Codes</h4>
+        <p>→ <code>return 200</code> — Success (like HTTP 200 OK)</p>
+        <p>→ <code>return 400</code> — Bad input (like HTTP 400 Bad Request)</p>
+        <p>These codes let the caller (tests) know if the operation succeeded or failed.</p>
+    </div>
+</main>
+<footer><p>StudySmart Documentation • THE HEIST • MIT License © 2026</p></footer>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="script.js"></script>
+</body>
+</html>

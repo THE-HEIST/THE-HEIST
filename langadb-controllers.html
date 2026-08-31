@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StudySmart - LangaDB/controllers.py</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://unpkg.com/nes.css@2.3.0/css/nes.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <link href="styles.css" rel="stylesheet">
+</head>
+<body>
+<nav class="nes-navbar"><div style="display:flex;align-items:center;gap:1rem;"><button class="hamburger" onclick="toggleSidebar()">☰</button><a href="index.html" class="logo">⬛ StudySmart Docs</a></div><div class="nav-links"><a href="index.html">HOME</a><a href="quick-start.html">QUICK START</a><a href="installation.html">INSTALL</a><a href="user-manual.html">MANUAL</a><button class="toggle-mode" onclick="toggleTheme()">☀/☾</button></div></nav>
+<div class="overlay" id="overlay" onclick="toggleSidebar()"></div>
+<aside id="sidebar">
+    <div class="sidebar-section"><h6>◆ General</h6><a href="index.html" class="sidebar-link">🏠 Home</a><a href="quick-start.html" class="sidebar-link">⚡ Quick Start</a><a href="installation.html" class="sidebar-link">📦 Installation</a><a href="user-manual.html" class="sidebar-link">📖 User Manual</a></div>
+    <div class="sidebar-section"><h6>◆ Source Code</h6><a href="main-py.html" class="sidebar-link">main.py</a><a href="langadb-controllers.html" class="sidebar-link active">LangaDB/controllers.py</a><a href="config.html" class="sidebar-link">config.py</a><a href="config4test.html" class="sidebar-link">config4test.py</a><a href="auth-controllers.html" class="sidebar-link" style="color:var(--accent-pink);opacity:0.6;text-decoration:line-through;" title="NOT USED"">auth/controllers.py</a><a href="auth-session.html" class="sidebar-link" style="color:var(--accent-pink);opacity:0.6;text-decoration:line-through;" title="NOT USED"">auth/session.py</a><a href="calculate-priority.html" class="sidebar-link">calculate_priority.py</a><a href="product.html" class="sidebar-link">product.py</a><a href="create-assignments.html" class="sidebar-link">create/assignments.py</a><a href="read-assignments.html" class="sidebar-link">read/assignments.py</a><a href="update-mark-as-done.html" class="sidebar-link">update/mark_as_done.py</a><a href="delete-assignment.html" class="sidebar-link">delete/assignment.py</a></div>
+    <div class="sidebar-section"><h6>◆ Configuration</h6><a href="requirements-txt.html" class="sidebar-link">requirements.txt</a><a href="pyproject-toml.html" class="sidebar-link">pyproject.toml</a><a href="ci-workflow.html" class="sidebar-link">CI/CD Workflow</a></div>
+    <div class="sidebar-section"><h6>◆ Tests</h6><a href="test-create-assignment.html" class="sidebar-link">test_create_assignment.py</a><a href="test-read-assignment.html" class="sidebar-link">test_read_assignment.py</a><a href="test-update-mark.html" class="sidebar-link">test_update_mark.py</a><a href="test-delete.html" class="sidebar-link">test_delete.py</a><a href="test-calculate-priority.html" class="sidebar-link">test_calculate_priority.py</a><a href="test-priority-level.html" class="sidebar-link">test_priority_level.py</a></div>
+    <div class="sidebar-section"><h6>◆ Project</h6><a href="directory-structure.html" class="sidebar-link">📁 Directory Structure</a></div>
+</aside>
+
+<main id="main-content">
+    <h1 class="section-title">📄 LangaDB/controllers.py</h1>
+    <div class="file-path">📁 StudySmart/src/LangaDB/controllers.py</div>
+
+    <div class="overview-box">
+        <h3>🔍 What does this file do?</h3>
+        <p>This is the <strong>heart of the data storage system</strong>. It defines the <code>LangaDB</code>
+        class — a custom, lightweight database engine built entirely in Python using JSON files. Instead of
+        using a real database like MySQL or SQLite, this project stores all data as simple JSON files on disk.</p>
+        <p>The LangaDB class provides all the essential database operations: open, read, write, find, add,
+        update, delete, sort, and query. Every other file in the project uses LangaDB to save and retrieve data.</p>
+        <p><strong>Analogy:</strong> LangaDB is like a filing cabinet. You can put files in it (add), take
+        files out (find), update files (update), throw files away (clear), and list all files (all).</p>
+    </div>
+
+    <!-- FULL CODE -->
+    <h3 style="font-size:0.6rem;color:var(--accent-yellow);margin-bottom:1rem;">📝 Full Source Code</h3>
+    <div class="code-block"><span class="code-keyword">import</span> json
+<span class="code-keyword">import</span> os
+
+<span class="code-keyword">class</span> LangaDB:
+    <span class="code-keyword">def</span> __init__(self, db_path, default_data):
+        self.db_path = db_path
+        self.data = default_data <span class="code-keyword">if</span> default_data <span class="code-keyword">is not</span> <span class="code-keyword">None</span> <span class="code-keyword">else</span> {}
+        self.open()
+
+    <span class="code-keyword">def</span> open(self):
+        <span class="code-keyword">if not</span> os.path.exists(self.db_path):
+            <span class="code-keyword">try</span>:
+                <span class="code-keyword">with</span> open(self.db_path, <span class="code-string">'x'</span>, encoding=<span class="code-string">'utf-8'</span>) <span class="code-keyword">as</span> file:
+                    file.write(<span class="code-string">"[]"</span> <span class="code-keyword">if</span> isinstance(self.data, list) <span class="code-keyword">else</span> <span class="code-string">"{}"</span>)
+            <span class="code-keyword">except</span> Exception <span class="code-keyword">as</span> e:
+                print(f<span class="code-string">"Error: {e}"</span>)
+                <span class="code-keyword">return False</span>
+        <span class="code-keyword">else</span>:
+            <span class="code-keyword">try</span>:
+                <span class="code-keyword">with</span> open(self.db_path, <span class="code-string">'r'</span>, encoding=<span class="code-string">'utf-8'</span>) <span class="code-keyword">as</span> file:
+                    self.data = json.loads(file.read())
+            <span class="code-keyword">except</span> json.JSONDecodeError:
+                print(<span class="code-string">"Error: The files format was not JSON"</span>)
+                <span class="code-keyword">return False</span>
+            <span class="code-keyword">except</span> Exception <span class="code-keyword">as</span> e:
+                print(f<span class="code-string">"Error: {e}"</span>)
+                <span class="code-keyword">return False</span>
+
+    <span class="code-keyword">def</span> all(self, name):
+        <span class="code-keyword">if</span> isinstance(self.data, dict):
+            <span class="code-keyword">return</span> self.data.get(name, [])
+        <span class="code-keyword">elif</span> isinstance(self.data, list):
+            <span class="code-keyword">return</span> self.data
+        <span class="code-keyword">else</span>:
+            <span class="code-keyword">return</span> []
+
+    <span class="code-keyword">def</span> save(self, new_data):
+        <span class="code-keyword">try</span>:
+            <span class="code-keyword">with</span> open(self.db_path, <span class="code-string">'w'</span>, encoding=<span class="code-string">'utf-8'</span>) <span class="code-keyword">as</span> file:
+                json.dump(new_data, file, ensure_ascii=<span class="code-keyword">False</span>, indent=4)
+            <span class="code-keyword">return True</span>
+        <span class="code-keyword">except</span> Exception <span class="code-keyword">as</span> e:
+            print(f<span class="code-string">"Error: {e}"</span>)
+
+    <span class="code-keyword">def</span> query(self, path, default=<span class="code-keyword">None</span>):
+        keys = path.split(<span class="code-string">'.'</span>)
+        current = self.data
+        <span class="code-keyword">for</span> key <span class="code-keyword">in</span> keys:
+            <span class="code-keyword">if</span> isinstance(current, dict) <span class="code-keyword">and</span> key <span class="code-keyword">in</span> current:
+                current = current[key]
+            <span class="code-keyword">else</span>:
+                <span class="code-keyword">return</span> default
+        <span class="code-keyword">return</span> current
+
+    <span class="code-keyword">def</span> find(self, list_key, field_name, value):
+        items = self.data <span class="code-keyword">if</span> isinstance(self.data, list) <span class="code-keyword">else</span> self.query(list_key, [])
+        <span class="code-keyword">if</span> isinstance(items, list):
+            <span class="code-keyword">for</span> item <span class="code-keyword">in</span> items:
+                <span class="code-keyword">if</span> isinstance(item, dict) <span class="code-keyword">and</span> item.get(field_name) == value:
+                    <span class="code-keyword">return</span> item
+        <span class="code-keyword">return None</span>
+
+    <span class="code-keyword">def</span> auto_increment_id(self, counter_key=<span class="code-string">"last_id"</span>):
+        current = self.data.get(counter_key, 0) <span class="code-keyword">if</span> isinstance(self.data, dict) <span class="code-keyword">else</span> 0
+        new_id = current + 1
+        <span class="code-keyword">if</span> isinstance(self.data, dict):
+            self.data[counter_key] = new_id
+        <span class="code-keyword">return</span> new_id
+
+    <span class="code-keyword">def</span> add(self, list_key, new_item, auto_id=<span class="code-keyword">True</span>):
+        <span class="code-keyword">if</span> auto_id <span class="code-keyword">and</span> isinstance(new_item, dict) <span class="code-keyword">and</span> <span class="code-string">"id"</span> <span class="code-keyword">not in</span> new_item:
+            new_item[<span class="code-string">"id"</span>] = self.auto_increment_id()
+        target = self.query(list_key)
+        <span class="code-keyword">if</span> isinstance(target, list):
+            target.append(new_item)
+        <span class="code-keyword">elif</span> self.data == [] <span class="code-keyword">or</span> isinstance(self.data, list):
+            self.data.append(new_item)
+        <span class="code-keyword">return</span> self.save(self.data)
+
+    <span class="code-keyword">def</span> sort_by(self, list_key=<span class="code-string">"assignments"</span>, sort_key=<span class="code-string">"score"</span>, reverse=<span class="code-keyword">True</span>, limit=<span class="code-keyword">None</span>):
+        items = self.data <span class="code-keyword">if</span> isinstance(self.data, list) <span class="code-keyword">else</span> self.query(list_key, self.data <span class="code-keyword">if</span> isinstance(self.data, list) <span class="code-keyword">else</span> [])
+        <span class="code-keyword">if not</span> isinstance(items, list):
+            <span class="code-keyword">return</span> []
+        result = sorted(items, key=<span class="code-keyword">lambda</span> item: item.get(sort_key, 0), reverse=reverse)
+        <span class="code-keyword">return</span> result[:limit] <span class="code-keyword">if</span> limit <span class="code-keyword">is not None</span> <span class="code-keyword">else</span> result
+
+    <span class="code-keyword">def</span> update(self, list_key, field_name, value, updates):
+        item = self.find(list_key, field_name, value)
+        <span class="code-keyword">if</span> item:
+            item.update(updates)
+            <span class="code-keyword">return</span> self.save(self.data)
+        <span class="code-keyword">return False</span>
+
+    <span class="code-keyword">def</span> clear_all(self, list_key):
+        <span class="code-keyword">if</span> isinstance(self.data, dict) <span class="code-keyword">and</span> list_key <span class="code-keyword">in</span> self.data:
+            self.data[list_key] = []
+            self.data[<span class="code-string">'last_id'</span>] = 0
+        <span class="code-keyword">elif</span> isinstance(self.data, list):
+            self.data.clear()
+        <span class="code-keyword">else</span>:
+            <span class="code-keyword">return False</span>
+        <span class="code-keyword">return</span> self.save(self.data)
+
+    <span class="code-keyword">def</span> get_last_id(self, list_key):
+        <span class="code-keyword">if</span> isinstance(self.data, dict) <span class="code-keyword">and</span> list_key <span class="code-keyword">in</span> self.data:
+            <span class="code-keyword">return</span> self.data.get(<span class="code-string">'last_id'</span>, 0)
+        <span class="code-keyword">elif</span> isinstance(self.data, list):
+            <span class="code-keyword">return</span> len(self.data)
+        <span class="code-keyword">else</span>:
+            <span class="code-keyword">return</span> 0</div>
+
+    <!-- EXPLANATIONS -->
+    <h3 style="font-size:0.6rem;color:var(--accent-yellow);margin:1.5rem 0 1rem;">📖 Line-by-Line Explanation</h3>
+
+    <div class="explain-box">
+        <h4>Lines 1-2: Imports</h4>
+        <div class="code-block" style="font-size:0.6rem;"><span class="code-keyword">import</span> json
+<span class="code-keyword">import</span> os</div>
+        <p><code>json</code> — A built-in Python library for reading and writing JSON data. JSON is a
+        text format that looks like: <code>{"name": "value"}</code>. It's used to save/load data.</p>
+        <p><code>os</code> — A built-in Python library for interacting with the operating system.
+        Here it's used to check if a file exists using <code>os.path.exists()</code>.</p>
+    </div>
+
+    <div class="explain-box">
+        <h4>Lines 4-7: The Constructor (__init__)</h4>
+        <div class="code-block" style="font-size:0.6rem;"><span class="code-keyword">class</span> LangaDB:
+    <span class="code-keyword">def</span> __init__(self, db_path, default_data):
+        self.db_path = db_path
+        self.data = default_data <span class="code-keyword">if</span> default_data <span class="code-keyword">is not</span> <span class="code-keyword">None</span> <span class="code-keyword">else</span> {}
+        self.open()</div>
+        <p><code>class LangaDB:</code> — Defines a new "blueprint" called LangaDB. A class is like a
+        template for creating objects.</p>
+        <p><code>__init__</code> — This is called a "constructor". It runs automatically when you create
+        a new LangaDB object. Think of it like a setup routine.</p>
+        <p><code>db_path</code> — The file path where data is stored (e.g., <code>"src/data/users.json"</code>).</p>
+        <p><code>default_data</code> — What to start with if the file is empty (e.g., <code>{"users": []}</code>).</p>
+        <p><code>self.db_path = db_path</code> — Saves the file path for later use. <code>self</code>
+        means "this particular object".</p>
+        <p><code>self.data = default_data if default_data is not None else {}</code> — Sets the data
+        to the default if provided, otherwise starts with an empty dictionary <code>{}</code>.</p>
+        <p><code>self.open()</code> — Immediately tries to open and read the JSON file.</p>
+    </div>
+
+    <div class="explain-box">
+        <h4>Lines 9-24: open() Method</h4>
+        <div class="code-block" style="font-size:0.6rem;"><span class="code-keyword">def</span> open(self):
+    <span class="code-keyword">if not</span> os.path.exists(self.db_path):
+        <span class="code-keyword">try</span>:
+            <span class="code-keyword">with</span> open(self.db_path, <span class="code-string">'x'</span>, encoding=<span class="code-string">'utf-8'</span>) <span class="code-keyword">as</span> file:
+                file.write(<span class="code-string">"[]"</span> <span class="code-keyword">if</span> isinstance(self.data, list) <span class="code-keyword">else</span> <span class="code-string">"{}"</span>)
+        <span class="code-keyword">except</span> Exception <span class="code-keyword">as</span> e:
+            print(f<span class="code-string">"Error: {e}"</span>)
+            <span class="code-keyword">return False</span>
+    <span class="code-keyword">else</span>:
+        <span class="code-keyword">try</span>:
+            <span class="code-keyword">with</span> open(self.db_path, <span class="code-string">'r'</span>, encoding=<span class="code-string">'utf-8'</span>) <span class="code-keyword">as</span> file:
+                self.data = json.loads(file.read())
+        <span class="code-keyword">except</span> json.JSONDecodeError:
+            print(<span class="code-string">"Error: The files format was not JSON"</span>)
+            <span class="code-keyword">return False</span></div>
+        <p>This method has two paths:</p>
+        <p><strong>If the file does NOT exist:</strong> It creates a new file (using mode <code>'x'</code>
+        which means "create exclusively") and writes an empty JSON structure (<code>"[]"</code> for lists
+        or <code>"{}"</code> for dictionaries).</p>
+        <p><strong>If the file DOES exist:</strong> It opens the file (using mode <code>'r'</code> for
+        "read") and loads the JSON content into <code>self.data</code> using <code>json.loads()</code>
+        which converts a JSON string into a Python object.</p>
+        <p><code>try/except</code> — Error handling. If something goes wrong (e.g., file is corrupted),
+        it prints an error message instead of crashing.</p>
+        <p><code>with open(...) as file:</code> — The <code>with</code> statement automatically closes
+        the file when done, even if an error occurs.</p>
+    </div>
+
+    <div class="explain-box">
+        <h4>Lines 26-31: all() Method</h4>
+        <div class="code-block" style="font-size:0.6rem;"><span class="code-keyword">def</span> all(self, name):
+    <span class="code-keyword">if</span> isinstance(self.data, dict):
+        <span class="code-keyword">return</span> self.data.get(name, [])
+    <span class="code-keyword">elif</span> isinstance(self.data, list):
+        <span class="code-keyword">return</span> self.data
+    <span class="code-keyword">else</span>:
+        <span class="code-keyword">return</span> []</div>
+        <p>Returns all items from the database.</p>
+        <p>→ If data is a dictionary: returns the list under the given key (e.g., <code>data["assignments"]</code>).</p>
+        <p>→ If data is a list: returns the entire list directly.</p>
+        <p>→ If neither: returns an empty list <code>[]</code>.</p>
+        <p><code>isinstance()</code> checks what type something is. <code>.get(name, [])</code> gets a
+        value from a dictionary, returning <code>[]</code> if the key doesn't exist.</p>
+    </div>
+
+    <div class="explain-box">
+        <h4>Lines 33-39: save() Method</h4>
+        <div class="code-block" style="font-size:0.6rem;"><span class="code-keyword">def</span> save(self, new_data):
+    <span class="code-keyword">try</span>:
+        <span class="code-keyword">with</span> open(self.db_path, <span class="code-string">'w'</span>, encoding=<span class="code-string">'utf-8'</span>) <span class="code-keyword">as</span> file:
+            json.dump(new_data, file, ensure_ascii=<span class="code-keyword">False</span>, indent=4)
+        <span class="code-keyword">return True</span>
+    <span class="code-keyword">except</span> Exception <span class="code-keyword">as</span> e:
+        print(f<span class="code-string">"Error: {e}"</span>)</div>
+        <p>Saves all data back to the JSON file.</p>
+        <p><code>open(..., 'w')</code> — Opens the file in "write" mode, which overwrites the entire file.</p>
+        <p><code>json.dump(new_data, file, ...)</code> — Converts the Python data into JSON text and
+        writes it to the file. <code>indent=4</code> makes the JSON pretty-printed (easy to read).</p>
+        <p><code>ensure_ascii=False</code> — Allows non-English characters (like Vietnamese) to be saved.</p>
+        <p>Returns <code>True</code> on success, or prints an error on failure.</p>
+    </div>
+
+    <div class="explain-box">
+        <h4>Lines 41-49: query() Method</h4>
+        <div class="code-block" style="font-size:0.6rem;"><span class="code-keyword">def</span> query(self, path, default=<span class="code-keyword">None</span>):
+    keys = path.split(<span class="code-string">'.'</span>)
+    current = self.data
+    <span class="code-keyword">for</span> key <span class="code-keyword">in</span> keys:
+        <span class="code-keyword">if</span> isinstance(current, dict) <span class="code-keyword">and</span> key <span class="code-keyword">in</span> current:
+            current = current[key]
+        <span class="code-keyword">else</span>:
+            <span class="code-keyword">return</span> default
+    <span class="code-keyword">return</span> current</div>
+        <p>Lets you navigate deep into nested data using a dot-separated path.</p>
+        <p><code>path.split('.')</code> — Splits a string like <code>"users"</code> or <code>"a.b.c"</code>
+        into a list: <code>["users"]</code> or <code>["a", "b", "c"]</code>.</p>
+        <p>Then it walks through each key, going deeper into the data structure.</p>
+        <p><strong>Example:</strong> If data = <code>{"users": [{"name": "Tom"}]}</code>, then
+        <code>query("users")</code> returns <code>[{"name": "Tom"}]</code>.</p>
+    </div>
+
+    <div class="explain-box">
+        <h4>Lines 51-56: find() Method</h4>
+        <div class="code-block" style="font-size:0.6rem;"><span class="code-keyword">def</span> find(self, list_key, field_name, value):
+    items = self.data <span class="code-keyword">if</span> isinstance(self.data, list) <span class="code-keyword">else</span> self.query(list_key, [])
+    <span class="code-keyword">if</span> isinstance(items, list):
+        <span class="code-keyword">for</span> item <span class="code-keyword">in</span> items:
+            <span class="code-keyword">if</span> isinstance(item, dict) <span class="code-keyword">and</span> item.get(field_name) == value:
+                <span class="code-keyword">return</span> item
+    <span class="code-keyword">return None</span></div>
+        <p>Finds one specific item in the list by matching a field value.</p>
+        <p><strong>Example:</strong> <code>find("users", "username", "Tom")</code> searches through all
+        users and returns the first one where <code>username == "Tom"</code>.</p>
+        <p>→ Gets the list of items (either directly from <code>self.data</code> or via <code>query()</code>).</p>
+        <p>→ Loops through each item, checking if the specified field matches the value.</p>
+        <p>→ Returns the first matching item, or <code>None</code> if nothing is found.</p>
+    </div>
+
+    <div class="explain-box">
+        <h4>Lines 58-63: auto_increment_id() Method</h4>
+        <div class="code-block" style="font-size:0.6rem;"><span class="code-keyword">def</span> auto_increment_id(self, counter_key=<span class="code-string">"last_id"</span>):
+    current = self.data.get(counter_key, 0) <span class="code-keyword">if</span> isinstance(self.data, dict) <span class="code-keyword">else</span> 0
+    new_id = current + 1
+    <span class="code-keyword">if</span> isinstance(self.data, dict):
+        self.data[counter_key] = new_id
+    <span class="code-keyword">return</span> new_id</div>
+        <p>Generates a unique ID number for each new item (like a serial number).</p>
+        <p>→ Reads the current <code>last_id</code> from data (starts at 0).</p>
+        <p>→ Adds 1 to get the new ID.</p>
+        <p>→ Saves the new ID back to data so the next call gets a different number.</p>
+        <p><strong>Example:</strong> First call returns 1, second returns 2, third returns 3, etc.</p>
+    </div>
+
+    <div class="explain-box">
+        <h4>Lines 65-73: add() Method</h4>
+        <div class="code-block" style="font-size:0.6rem;"><span class="code-keyword">def</span> add(self, list_key, new_item, auto_id=<span class="code-keyword">True</span>):
+    <span class="code-keyword">if</span> auto_id <span class="code-keyword">and</span> isinstance(new_item, dict) <span class="code-keyword">and</span> <span class="code-string">"id"</span> <span class="code-keyword">not in</span> new_item:
+        new_item[<span class="code-string">"id"</span>] = self.auto_increment_id()
+    target = self.query(list_key)
+    <span class="code-keyword">if</span> isinstance(target, list):
+        target.append(new_item)
+    <span class="code-keyword">elif</span> self.data == [] <span class="code-keyword">or</span> isinstance(self.data, list):
+        self.data.append(new_item)
+    <span class="code-keyword">return</span> self.save(self.data)</div>
+        <p>Adds a new item to the database.</p>
+        <p>→ If <code>auto_id=True</code> and the item doesn't already have an <code>id</code>,
+        it automatically assigns one using <code>auto_increment_id()</code>.</p>
+        <p>→ Finds the target list using <code>query()</code> and appends the new item.</p>
+        <p>→ Saves everything back to the file.</p>
+        <p><strong>Example:</strong> <code>add("assignments", {"name": "Math HW"})</code> adds a new
+        assignment with an auto-generated ID.</p>
+    </div>
+
+    <div class="explain-box">
+        <h4>Lines 75-80: sort_by() Method</h4>
+        <p>Sorts items by a specific field. Used to sort assignments by score (priority).</p>
+        <p><code>sorted(items, key=lambda item: item.get(sort_key, 0), reverse=reverse)</code> — Python's
+        built-in sort. The <code>lambda</code> is a tiny function that extracts the sort key from each item.</p>
+        <p><code>reverse=True</code> means highest values first. <code>limit</code> restricts the number
+        of results returned.</p>
+    </div>
+
+    <div class="explain-box">
+        <h4>Lines 82-86: update() Method</h4>
+        <p>Finds an item by field name/value and updates its fields.</p>
+        <p><code>item.update(updates)</code> — Merges the new values into the existing item. For example,
+        if <code>item = {"completed": False}</code> and <code>updates = {"completed": True}</code>,
+        after update the item becomes <code>{"completed": True}</code>.</p>
+    </div>
+
+    <div class="explain-box">
+        <h4>Lines 88-97: clear_all() Method</h4>
+        <p>Empties an entire list and resets the ID counter.</p>
+        <p>→ If data is a dictionary: sets the list to <code>[]</code> and <code>last_id</code> to 0.</p>
+        <p>→ If data is a list: clears the entire list.</p>
+        <p>Used in tests to start with a clean slate.</p>
+    </div>
+
+    <div class="explain-box">
+        <h4>Lines 99-105: get_last_id() Method</h4>
+        <p>Returns the last assigned ID number without incrementing it. Useful for knowing how many
+        items exist.</p>
+    </div>
+
+    <div class="overview-box" style="border-color:var(--accent-yellow);">
+        <h3 style="color:var(--accent-yellow);">🔗 How Other Files Use LangaDB</h3>
+        <p>→ <a href="config.html" style="color:var(--accent-green);">config.py</a> creates two LangaDB instances: one for users, one for assignments</p>
+        <p>→ <a href="create-assignments.html" style="color:var(--accent-green);">assignments.py (create)</a> uses <code>add()</code> to save new assignments</p>
+        <p>→ <a href="read-assignments.html" style="color:var(--accent-green);">assignments.py (read)</a> uses <code>all()</code> to load all assignments</p>
+        <p>→ <a href="auth-controllers.html" style="color:var(--accent-green);">auth/controllers.py</a> uses <code>find()</code> to look up users</p>
+        <p>→ <a href="update-mark-as-done.html" style="color:var(--accent-green);">mark_as_done.py</a> uses <code>update()</code> to change completion status</p>
+    </div>
+</main>
+
+<footer><p>StudySmart Documentation • THE HEIST • MIT License © 2026</p></footer>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="script.js"></script>
+</body>
+</html>

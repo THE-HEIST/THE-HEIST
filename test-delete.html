@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="dark">
+<head>
+    <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>StudySmart - test_delete.py</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"><link href="https://unpkg.com/nes.css@2.3.0/css/nes.min.css" rel="stylesheet"><link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <link href="styles.css" rel="stylesheet">
+</head>
+<body>
+<nav class="nes-navbar"><div style="display:flex;align-items:center;gap:1rem;"><button class="hamburger" onclick="toggleSidebar()">☰</button><a href="index.html" class="logo">⬛ StudySmart Docs</a></div><div class="nav-links"><a href="index.html">HOME</a><a href="quick-start.html">QUICK START</a><a href="installation.html">INSTALL</a><a href="user-manual.html">MANUAL</a><button class="toggle-mode" onclick="toggleTheme()">☀/☾</button></div></nav>
+<div class="overlay" id="overlay" onclick="toggleSidebar()"></div>
+<aside id="sidebar">
+    <div class="sidebar-section"><h6>◆ General</h6><a href="index.html" class="sidebar-link">🏠 Home</a><a href="quick-start.html" class="sidebar-link">⚡ Quick Start</a><a href="installation.html" class="sidebar-link">📦 Installation</a><a href="user-manual.html" class="sidebar-link">📖 User Manual</a></div>
+    <div class="sidebar-section"><h6>◆ Source Code</h6><a href="main-py.html" class="sidebar-link">main.py</a><a href="langadb-controllers.html" class="sidebar-link">LangaDB/controllers.py</a><a href="config.html" class="sidebar-link">config.py</a><a href="config4test.html" class="sidebar-link">config4test.py</a><a href="auth-controllers.html" class="sidebar-link" style="color:var(--accent-pink);opacity:0.6;text-decoration:line-through;" title="NOT USED"">auth/controllers.py</a><a href="auth-session.html" class="sidebar-link" style="color:var(--accent-pink);opacity:0.6;text-decoration:line-through;" title="NOT USED"">auth/session.py</a><a href="calculate-priority.html" class="sidebar-link">calculate_priority.py</a><a href="product.html" class="sidebar-link">product.py</a><a href="create-assignments.html" class="sidebar-link">create/assignments.py</a><a href="read-assignments.html" class="sidebar-link">read/assignments.py</a><a href="update-mark-as-done.html" class="sidebar-link">update/mark_as_done.py</a><a href="delete-assignment.html" class="sidebar-link">delete/assignment.py</a></div>
+    <div class="sidebar-section"><h6>◆ Configuration</h6><a href="requirements-txt.html" class="sidebar-link">requirements.txt</a><a href="pyproject-toml.html" class="sidebar-link">pyproject.toml</a><a href="ci-workflow.html" class="sidebar-link">CI/CD Workflow</a></div>
+    <div class="sidebar-section"><h6>◆ Tests</h6><a href="test-create-assignment.html" class="sidebar-link">test_create_assignment.py</a><a href="test-read-assignment.html" class="sidebar-link">test_read_assignment.py</a><a href="test-update-mark.html" class="sidebar-link">test_update_mark.py</a><a href="test-delete.html" class="sidebar-link active">test_delete.py</a><a href="test-calculate-priority.html" class="sidebar-link">test_calculate_priority.py</a><a href="test-priority-level.html" class="sidebar-link">test_priority_level.py</a></div>
+    <div class="sidebar-section"><h6>◆ Project</h6><a href="directory-structure.html" class="sidebar-link">📁 Directory Structure</a></div>
+</aside>
+<main id="main-content">
+    <h1 class="section-title">📄 test_delete.py</h1>
+    <div class="file-path">📁 StudySmart/tests/delete/test_delete.py</div>
+
+    <div class="overview-box">
+        <h3>🔍 What does this file do?</h3>
+        <p>This file contains a <strong>unit test for the delete_assignment() function</strong>. It verifies
+        that when a user selects an assignment to delete, that assignment is actually removed from
+        the database. It uses <code>monkeypatch</code> to simulate user input and a test database
+        to avoid modifying real data.</p>
+    </div>
+
+    <div class="overview-box" style="border-color:var(--accent-cyan);">
+        <h3 style="color:var(--accent-cyan);">🧪 Testing Concepts Used</h3>
+        <p><strong>monkeypatch</strong> — A pytest feature that replaces built-in functions temporarily.
+        Here it replaces <code>input()</code> so the test doesn't need a real user typing. Instead,
+        the test provides a pre-set answer <code>"1"</code> to simulate choosing the first assignment.</p>
+        <p><strong>test_assignments_db</strong> — A special test database imported from <code>config4test.py</code>.
+        This ensures tests never touch the real user data. See <a href="config4test.html" style="color:var(--accent-cyan);">config4test.py</a> for details.</p>
+        <p><strong>assert</strong> — Checks if a condition is true. If not, the test fails immediately.
+        Here it checks that the assignment count is 0 after deletion.</p>
+    </div>
+
+    <h3 style="font-size:0.6rem;color:var(--accent-yellow);margin-bottom:1rem;">📝 Full Source Code</h3>
+    <div class="code-block"><span class="code-keyword">from</span> src.core.delete.assignment <span class="code-keyword">import</span> delete_assignment
+<span class="code-keyword">import</span> pytest
+<span class="code-keyword">from</span> src.data_processing_module.config4test <span class="code-keyword">import</span> test_assignments_db <span class="code-keyword">as</span> Assignments
+
+
+<span class="code-keyword">def</span> <span class="code-string">test_delete_assignment</span>(monkeypatch):
+    <span class="code-comment"># Create a mock assignment to delete</span>
+    mock_assignment = {
+        <span class="code-string">"id"</span>: <span class="code-string">1</span>,
+        <span class="code-string">"title"</span>: <span class="code-string">"Test Assignment"</span>,
+        <span class="code-string">"description"</span>: <span class="code-string">"This is a test assignment."</span>,
+        <span class="code-string">"priority"</span>: <span class="code-string">1</span>,
+        <span class="code-string">"status"</span>: <span class="code-string">"undone"</span>
+    }
+
+    <span class="code-comment"># Save the mock assignment to the Assignments</span>
+    Assignments.save({<span class="code-string">"last_id"</span>: <span class="code-string">1</span>, <span class="code-string">"assignments"</span>: [mock_assignment]})
+
+    <span class="code-comment"># Call the delete_assignment function</span>
+    inputs = [<span class="code-string">"1"</span>]  <span class="code-comment"># Simulate user input for assignment number to delete</span>
+    <span class="code-keyword">with</span> monkeypatch.context() <span class="code-keyword">as</span> m:
+        m.setattr(<span class="code-string">'builtins.input'</span>, <span class="code-keyword">lambda</span> _: inputs.pop(<span class="code-string">0</span>))
+    delete_assignment(Assignments=Assignments, assignments=Assignments.all(<span class="code-string">"assignments"</span>))
+
+    <span class="code-comment"># Verify that the assignment has been deleted</span>
+    assignments = Assignments.all(<span class="code-string">"assignments"</span>)
+    <span class="code-keyword">assert</span> <span class="code-keyword">len</span>(assignments) == <span class="code-string">0</span></div>
+
+    <h3 style="font-size:0.6rem;color:var(--accent-yellow);margin:1.5rem 0 1rem;">📖 Line-by-Line Explanation</h3>
+
+    <div class="explain-box">
+        <h4>Lines 1-3: Imports</h4>
+        <p><code>from src.core.delete.assignment import delete_assignment</code> — Imports the delete function
+        we want to test. This is the function defined in <a href="delete-assignment.html" style="color:var(--accent-cyan);">delete/assignment.py</a>.</p>
+        <p><code>import pytest</code> — Imports the pytest testing framework, needed for <code>monkeypatch</code>.</p>
+        <p><code>from src.data_processing_module.config4test import test_assignments_db as Assignments</code> —
+        Imports the <strong>test database</strong> (not the real one!) and renames it to <code>Assignments</code>
+        for convenience. This is critical — it means our test never touches real user data.</p>
+    </div>
+
+    <div class="explain-box">
+        <h4>Lines 5-14: Creating a Mock Assignment</h4>
+        <p><code>def test_delete_assignment(monkeypatch):</code> — Defines the test function. pytest discovers any function
+        whose name starts with <code>test_</code>.</p>
+        <p><code>mock_assignment = { ... }</code> — Creates a dictionary that looks like a real assignment.
+        It has an <code>id</code> of 1, a title, description, priority level 1, and status "undone".
+        This is what we'll delete in the test.</p>
+    </div>
+
+    <div class="explain-box">
+        <h4>Line 17: Saving the Mock Data</h4>
+        <p><code>Assignments.save({"last_id": 1, "assignments": [mock_assignment]})</code> — Saves the mock
+        assignment into the test database. The <code>save()</code> method writes JSON to the test file.
+        After this line, the test database contains exactly 1 assignment with id=1.</p>
+    </div>
+
+    <div class="explain-box">
+        <h4>Lines 20-23: Simulating User Input with monkeypatch</h4>
+        <p><code>inputs = ["1"]</code> — Creates a list with one value: the string "1". This simulates a user
+        typing "1" when asked which assignment to delete.</p>
+        <p><code>monkeypatch.context()</code> — Opens a temporary context where we can replace
+        built-in functions. When the context exits, everything is restored.</p>
+        <p><code>m.setattr('builtins.input', lambda _: inputs.pop(0))</code> — Replaces Python's
+        <code>input()</code> function with a lambda that pops from our <code>inputs</code> list.
+        So when <code>delete_assignment()</code> calls <code>input()</code>, it gets "1" instead of
+        waiting for user typing.</p>
+    </div>
+
+    <div class="explain-box">
+        <h4>Line 24: Running the Function Under Test</h4>
+        <p><code>delete_assignment(Assignments=Assignments, assignments=Assignments.all("assignments"))</code> —
+        Calls the actual delete function with our test database. It passes:
+        <br>• <code>Assignments</code> — the test LangaDB instance
+        <br>• <code>assignments</code> — the current list (which has 1 item)
+        <br>Inside this function, it will show the assignments, get input "1" (from monkeypatch), find
+        the assignment with id=1, and delete it.</p>
+    </div>
+
+    <div class="explain-box">
+        <h4>Lines 27-28: Verification (Assert)</h4>
+        <p><code>assignments = Assignments.all("assignments")</code> — Fetches the current list of assignments
+        from the test database after deletion.</p>
+        <p><code>assert len(assignments) == 0</code> — The most important line! It checks that the
+        assignments list is now <strong>empty</strong>. If the delete function worked correctly,
+        there should be 0 assignments left. If this assertion fails, pytest reports a test failure.</p>
+    </div>
+
+    <div class="warn-box">
+        <h4>⚠️ Important Note</h4>
+        <p>This test relies on the <code>delete()</code> method existing in LangaDB. However, looking at the
+        LangaDB source code in <a href="langadb-controllers.html" style="color:var(--accent-pink);">controllers.py</a>,
+        the <code>delete()</code> method is <strong>not explicitly defined</strong>. The
+        <code>delete_assignment()</code> function in <a href="delete-assignment.html" style="color:var(--accent-pink);">assignment.py</a>
+        calls <code>Assignments.delete()</code>, which means this feature may not work as expected.
+        This is a known incomplete feature in the project.</p>
+    </div>
+
+    <div class="info-box">
+        <h4>💡 How to Run This Test</h4>
+        <p>From the project root directory, run:</p>
+        <div class="code-block" style="font-size:12px;">pytest tests/delete/test_delete.py -v</div>
+        <p>The <code>-v</code> flag makes pytest show verbose output with the test name and result.</p>
+    </div>
+
+    <div class="overview-box" style="border-color:var(--accent-blue);">
+        <h3 style="color:var(--accent-blue);">🔗 Related Files</h3>
+        <p>• <a href="delete-assignment.html" style="color:var(--accent-cyan);">delete/assignment.py</a> — The function being tested</p>
+        <p>• <a href="langadb-controllers.html" style="color:var(--accent-cyan);">LangaDB/controllers.py</a> — The database engine (delete method)</p>
+        <p>• <a href="config4test.html" style="color:var(--accent-cyan);">config4test.py</a> — Test database configuration</p>
+        <p>• <a href="read-assignments.html" style="color:var(--accent-cyan);">read/assignments.py</a> — view_assignments() called inside delete</p>
+    </div>
+</main>
+<footer><p>StudySmart Documentation • THE HEIST • MIT License © 2026</p></footer>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="script.js"></script>
+</body>
+</html>

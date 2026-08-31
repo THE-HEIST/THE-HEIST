@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StudySmart - Quick Start</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://unpkg.com/nes.css@2.3.0/css/nes.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <link href="styles.css" rel="stylesheet">
+</head>
+<body>
+
+<nav class="nes-navbar">
+    <div style="display:flex; align-items:center; gap:1rem;">
+        <button class="hamburger" onclick="toggleSidebar()">☰</button>
+        <a href="index.html" class="logo">⬛ StudySmart Docs</a>
+    </div>
+    <div class="nav-links">
+        <a href="index.html">HOME</a>
+        <a href="quick-start.html">QUICK START</a>
+        <a href="installation.html">INSTALL</a>
+        <a href="user-manual.html">MANUAL</a>
+        <button class="toggle-mode" onclick="toggleTheme()">☀/☾</button>
+    </div>
+</nav>
+
+<div class="overlay" id="overlay" onclick="toggleSidebar()"></div>
+
+<aside id="sidebar">
+    <div class="sidebar-section">
+        <h6>◆ General</h6>
+        <a href="index.html" class="sidebar-link">🏠 Home</a>
+        <a href="quick-start.html" class="sidebar-link active">⚡ Quick Start</a>
+        <a href="installation.html" class="sidebar-link">📦 Installation</a>
+        <a href="user-manual.html" class="sidebar-link">📖 User Manual</a>
+    </div>
+    <div class="sidebar-section">
+        <h6>◆ Source Code</h6>
+        <a href="main-py.html" class="sidebar-link">main.py</a>
+        <a href="langadb-controllers.html" class="sidebar-link">LangaDB/controllers.py</a>
+        <a href="config.html" class="sidebar-link">config.py</a>
+        <a href="config4test.html" class="sidebar-link">config4test.py</a>
+        <a href="auth-controllers.html" class="sidebar-link" style="color:var(--accent-pink);opacity:0.6;text-decoration:line-through;" title="NOT USED"">auth/controllers.py</a>
+        <a href="auth-session.html" class="sidebar-link" style="color:var(--accent-pink);opacity:0.6;text-decoration:line-through;" title="NOT USED"">auth/session.py</a>
+        <a href="calculate-priority.html" class="sidebar-link">calculate_priority.py</a>
+        <a href="product.html" class="sidebar-link">product.py</a>
+        <a href="create-assignments.html" class="sidebar-link">create/assignments.py</a>
+        <a href="read-assignments.html" class="sidebar-link">read/assignments.py</a>
+        <a href="update-mark-as-done.html" class="sidebar-link">update/mark_as_done.py</a>
+        <a href="delete-assignment.html" class="sidebar-link">delete/assignment.py</a>
+    </div>
+    <div class="sidebar-section">
+        <h6>◆ Configuration</h6>
+        <a href="requirements-txt.html" class="sidebar-link">requirements.txt</a>
+        <a href="pyproject-toml.html" class="sidebar-link">pyproject.toml</a>
+        <a href="ci-workflow.html" class="sidebar-link">CI/CD Workflow</a>
+    </div>
+    <div class="sidebar-section">
+        <h6>◆ Tests</h6>
+        <a href="test-create-assignment.html" class="sidebar-link">test_create_assignment.py</a>
+        <a href="test-read-assignment.html" class="sidebar-link">test_read_assignment.py</a>
+        <a href="test-update-mark.html" class="sidebar-link">test_update_mark.py</a><a href="test-delete.html" class="sidebar-link">test_delete.py</a>
+        <a href="test-calculate-priority.html" class="sidebar-link">test_calculate_priority.py</a>
+        <a href="test-priority-level.html" class="sidebar-link">test_priority_level.py</a>
+    </div>
+    <div class="sidebar-section"><h6>◆ Project</h6><a href="directory-structure.html" class="sidebar-link">📁 Directory Structure</a></div>
+</aside>
+
+<main id="main-content">
+    <h1 class="section-title">⚡ Quick Start</h1>
+    <p style="font-size:0.5rem; color:var(--text-secondary); line-height:2.2; margin-bottom:2rem;">
+        Get StudySmart running in under 3 minutes! Follow these 4 simple steps.
+    </p>
+
+    <!-- STEP 1 -->
+    <div class="step-box">
+        <h3>Step 1: Clone the Repository</h3>
+        <p>First, download the project source code from GitHub to your computer.</p>
+        <div class="code-block"><span class="code-comment"># Download the project from GitHub</span>
+<span class="code-cmd">git clone</span> https://github.com/THE-HEIST/StudySmart.git
+
+<span class="code-comment"># Move into the project folder</span>
+<span class="code-cmd">cd</span> StudySmart</div>
+        <p><strong>What this does:</strong> The <code>git clone</code> command copies the entire project
+        from GitHub (an online code storage) to your computer. After that, <code>cd</code> moves you
+        into the project folder.</p>
+    </div>
+
+    <!-- STEP 2 -->
+    <div class="step-box">
+        <h3>Step 2: Install Python Dependencies</h3>
+        <p>StudySmart needs a few extra Python packages to work. Install them with pip.</p>
+        <div class="code-block"><span class="code-comment"># Install all required libraries from requirements.txt</span>
+<span class="code-cmd">pip install</span> -r requirements.txt</div>
+        <p><strong>What this does:</strong> The <code>pip install -r requirements.txt</code> command reads
+        the <code>requirements.txt</code> file and automatically downloads and installs all the
+        libraries listed there (pytest, pytest-cov, requests). Think of it like ordering supplies
+        from a shopping list.</p>
+    </div>
+
+    <!-- STEP 3 -->
+    <div class="step-box">
+        <h3>Step 3: Run the Application</h3>
+        <p>Start the StudySmart application by running the main file.</p>
+        <div class="code-block"><span class="code-comment"># Start the StudySmart application</span>
+<span class="code-cmd">python</span> main.py</div>
+        <p><strong>What this does:</strong> The <code>python main.py</code> command tells your computer
+        to run the <code>main.py</code> file using the Python interpreter. This file is the
+        "entry point" — the first file that runs when you start the program.</p>
+    </div>
+
+    <!-- STEP 4 -->
+    <div class="step-box">
+        <h3>Step 4: Use the Application</h3>
+        <p>Once the application starts, you will see a welcome screen and a menu like this:</p>
+        <div class="menu-output">********************
+WELLCOME TO STUDYSMART
+********************
+
+No    Function Name
+---------------------------------------------
+1     View Assignments
+2     Add Assignment
+3     Mark Assignment as Done
+4     Undo Mark Assignment as Done
+5     Show Study Summary
+6     Clear Terminal
+0     Exit
+
+Enter your choice:</div>
+        <p><strong>What this does:</strong> The program shows you a numbered menu. Type a number
+        and press Enter to choose an option. For example, type <code>2</code> to add a new assignment,
+        or <code>1</code> to view all your assignments.</p>
+        <p><strong>Example workflow:</strong></p>
+        <div class="code-block"><span class="code-comment"># 1. Add your first assignment (choose option 2)</span>
+Enter your choice: <span class="code-cmd">2</span>
+Assignment name: <span class="code-cmd">Math Homework</span>
+Module: <span class="code-cmd">Algebra</span>
+Deadline (Ex: yyyy-mm-dd): <span class="code-cmd">2026-09-15</span>
+Difficulty level (1 to 5): <span class="code-cmd">3</span>
+
+<span class="code-comment"># 2. View your assignments (choose option 1)</span>
+Enter your choice: <span class="code-cmd">1</span>
+Then choose: <span class="code-cmd">3</span> (View All Assignments)
+
+<span class="code-comment"># 3. Exit the program (choose option 0)</span>
+Enter your choice: <span class="code-cmd">0</span>
+Good Bye!</div>
+    </div>
+
+    <!-- NEXT STEPS -->
+    <div class="step-box" style="border-color: var(--accent-pink);">
+        <h3 style="color: var(--accent-pink);">▶ What's Next?</h3>
+        <p>Now that you have StudySmart running, explore more:</p>
+        <p>→ <a href="installation.html" style="color:var(--accent-green);">Installation Guide</a> — Detailed setup instructions</p>
+        <p>→ <a href="user-manual.html" style="color:var(--accent-green);">User Manual</a> — Complete guide to all features</p>
+        <p>→ <a href="main-py.html" style="color:var(--accent-green);">Code Documentation</a> — Understand how the code works</p>
+    </div>
+</main>
+
+<footer>
+    <p>StudySmart Documentation • THE HEIST • MIT License © 2026</p>
+    <p>Built with Bootstrap 5 • NES.css • Press Start 2P</p>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="script.js"></script>
+</body>
+</html>

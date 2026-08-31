@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StudySmart - update/mark_as_done.py</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://unpkg.com/nes.css@2.3.0/css/nes.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <link href="styles.css" rel="stylesheet">
+</head>
+<body>
+<nav class="nes-navbar"><div style="display:flex;align-items:center;gap:1rem;"><button class="hamburger" onclick="toggleSidebar()">☰</button><a href="index.html" class="logo">⬛ StudySmart Docs</a></div><div class="nav-links"><a href="index.html">HOME</a><a href="quick-start.html">QUICK START</a><a href="installation.html">INSTALL</a><a href="user-manual.html">MANUAL</a><button class="toggle-mode" onclick="toggleTheme()">☀/☾</button></div></nav>
+<div class="overlay" id="overlay" onclick="toggleSidebar()"></div>
+<aside id="sidebar">
+    <div class="sidebar-section"><h6>◆ General</h6><a href="index.html" class="sidebar-link">🏠 Home</a><a href="quick-start.html" class="sidebar-link">⚡ Quick Start</a><a href="installation.html" class="sidebar-link">📦 Installation</a><a href="user-manual.html" class="sidebar-link">📖 User Manual</a></div>
+    <div class="sidebar-section"><h6>◆ Source Code</h6><a href="main-py.html" class="sidebar-link">main.py</a><a href="langadb-controllers.html" class="sidebar-link">LangaDB/controllers.py</a><a href="config.html" class="sidebar-link">config.py</a><a href="config4test.html" class="sidebar-link">config4test.py</a><a href="auth-controllers.html" class="sidebar-link" style="color:var(--accent-pink);opacity:0.6;text-decoration:line-through;" title="NOT USED"">auth/controllers.py</a><a href="auth-session.html" class="sidebar-link" style="color:var(--accent-pink);opacity:0.6;text-decoration:line-through;" title="NOT USED"">auth/session.py</a><a href="calculate-priority.html" class="sidebar-link">calculate_priority.py</a><a href="product.html" class="sidebar-link">product.py</a><a href="create-assignments.html" class="sidebar-link">create/assignments.py</a><a href="read-assignments.html" class="sidebar-link">read/assignments.py</a><a href="update-mark-as-done.html" class="sidebar-link active">update/mark_as_done.py</a><a href="delete-assignment.html" class="sidebar-link">delete/assignment.py</a></div>
+    <div class="sidebar-section"><h6>◆ Configuration</h6><a href="requirements-txt.html" class="sidebar-link">requirements.txt</a><a href="pyproject-toml.html" class="sidebar-link">pyproject.toml</a><a href="ci-workflow.html" class="sidebar-link">CI/CD Workflow</a></div>
+    <div class="sidebar-section"><h6>◆ Tests</h6><a href="test-create-assignment.html" class="sidebar-link">test_create_assignment.py</a><a href="test-read-assignment.html" class="sidebar-link">test_read_assignment.py</a><a href="test-update-mark.html" class="sidebar-link">test_update_mark.py</a><a href="test-delete.html" class="sidebar-link">test_delete.py</a><a href="test-calculate-priority.html" class="sidebar-link">test_calculate_priority.py</a><a href="test-priority-level.html" class="sidebar-link">test_priority_level.py</a></div>
+    <div class="sidebar-section"><h6>◆ Project</h6><a href="directory-structure.html" class="sidebar-link">📁 Directory Structure</a></div>
+</aside>
+<main id="main-content">
+    <h1 class="section-title">📄 update/mark_as_done.py</h1>
+    <div class="file-path">📁 StudySmart/src/core/update/mark_as_done.py</div>
+    <div class="overview-box">
+        <h3>🔍 What does this file do?</h3>
+        <p>This file provides two functions: <code>mark_completed()</code> to mark an assignment as done,
+        and <code>undo_mark_as_done()</code> to reverse that action. Both show the list of assignments
+        first, then ask the user to pick one by its ID number.</p>
+    </div>
+    <h3 style="font-size:0.6rem;color:var(--accent-yellow);margin-bottom:1rem;">📝 Full Source Code</h3>
+    <div class="code-block"><span class="code-keyword">from</span> src.data_processing_module.config <span class="code-keyword">import</span> Assignments
+<span class="code-keyword">from</span> src.core.read.assignments <span class="code-keyword">import</span> view_assignments
+
+<span class="code-keyword">def</span> mark_completed(Assignments=Assignments, assignments=<span class="code-keyword">None</span>):
+    <span class="code-keyword">if</span> assignments <span class="code-keyword">is None</span> <span class="code-keyword">or</span> len(assignments) == 0:
+        print(<span class="code-string">"\nNo assignments to update.\n"</span>)
+        <span class="code-keyword">return</span>
+    view_assignments(assignments=assignments)
+    user_input = input(<span class="code-string">"\nEnter the assignment number to mark as completed: "</span>)
+    <span class="code-keyword">if not</span> user_input.isdigit():
+        print(<span class="code-string">"\nInvalid selection. Please choose a valid assignment number.\n"</span>)
+        <span class="code-keyword">return</span>
+    selected_number = int(user_input)
+    ass = Assignments.find(<span class="code-string">"assignments"</span>, <span class="code-string">"id"</span>, selected_number)
+    <span class="code-keyword">if</span> (selected_number >= 0 <span class="code-keyword">and</span> ass <span class="code-keyword">is not None</span> <span class="code-keyword">and</span> ass[<span class="code-string">'completed'</span>] == <span class="code-keyword">False</span>):
+        Assignments.update(<span class="code-string">"assignments"</span>, <span class="code-string">"id"</span>, selected_number, {<span class="code-string">"completed"</span>: <span class="code-keyword">True</span>})
+        print(<span class="code-string">"\nAssignment marked as completed.\n"</span>)
+    <span class="code-keyword">else</span>:
+        print(<span class="code-string">"\nInvalid selection. Please choose a valid assignment number.\n"</span>)
+
+<span class="code-keyword">def</span> undo_mark_as_done(Assignments=Assignments, assignments=<span class="code-keyword">None</span>):
+    <span class="code-keyword">if</span> assignments <span class="code-keyword">is None</span> <span class="code-keyword">or</span> len(assignments) == 0:
+        print(<span class="code-string">"\nNo assignments to update.\n"</span>)
+        <span class="code-keyword">return</span>
+    view_assignments(assignments=assignments)
+    user_input = input(<span class="code-string">"\nEnter the assignment number to undo mark as completed: "</span>)
+    <span class="code-keyword">if not</span> user_input.isdigit():
+        print(<span class="code-string">"\nInvalid selection. Please choose a valid assignment number.\n"</span>)
+        <span class="code-keyword">return</span>
+    selected_number = int(user_input)
+    ass = Assignments.find(<span class="code-string">"assignments"</span>, <span class="code-string">"id"</span>, selected_number)
+    <span class="code-keyword">if</span> (selected_number >= 0 <span class="code-keyword">and</span> ass <span class="code-keyword">is not None</span> <span class="code-keyword">and</span> ass[<span class="code-string">'completed'</span>] == <span class="code-keyword">True</span>):
+        Assignments.update(<span class="code-string">"assignments"</span>, <span class="code-string">"id"</span>, selected_number, {<span class="code-string">"completed"</span>: <span class="code-keyword">False</span>})
+        print(<span class="code-string">"\nAssignment marked as not completed.\n"</span>)
+    <span class="code-keyword">else</span>:
+        print(<span class="code-string">"\nInvalid selection. Please choose a valid assignment number.\n"</span>)</div>
+    <h3 style="font-size:0.6rem;color:var(--accent-yellow);margin:1.5rem 0 1rem;">📖 Key Parts Explained</h3>
+    <div class="explain-box">
+        <h4>Guard Clause (Early Return)</h4>
+        <p><code>if assignments is None or len(assignments) == 0:</code> — This checks if there are
+        any assignments to work with. If not, it prints a message and returns immediately. This
+        prevents errors from trying to show an empty list.</p>
+    </div>
+    <div class="explain-box">
+        <h4>Input Validation with .isdigit()</h4>
+        <p><code>user_input.isdigit()</code> checks if the user typed a valid number (not letters or
+        symbols). If they type "abc", it shows an error instead of crashing.</p>
+    </div>
+    <div class="explain-box">
+        <h4>Three-Condition Check</h4>
+        <p><code>if selected_number >= 0 and ass is not None and ass['completed'] == False:</code></p>
+        <p>Three things must be true to mark as done:</p>
+        <p>1. The number must be non-negative</p>
+        <p>2. An assignment with that ID must exist</p>
+        <p>3. The assignment must NOT already be completed</p>
+        <p>For <code>undo_mark_as_done</code>, condition 3 is reversed: <code>ass['completed'] == True</code></p>
+    </div>
+    <div class="explain-box">
+        <h4>Assignments.update()</h4>
+        <p>Uses LangaDB's <code>update()</code> method to change the <code>"completed"</code> field
+        from <code>False</code> to <code>True</code> (or vice versa), then saves to disk.</p>
+    </div>
+</main>
+<footer><p>StudySmart Documentation • THE HEIST • MIT License © 2026</p></footer>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="script.js"></script>
+</body>
+</html>

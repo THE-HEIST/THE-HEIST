@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="dark">
+<head>
+    <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>StudySmart - Directory Structure</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"><link href="https://unpkg.com/nes.css@2.3.0/css/nes.min.css" rel="stylesheet"><link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <link href="styles.css" rel="stylesheet">
+</head>
+<body>
+<nav class="nes-navbar"><div style="display:flex;align-items:center;gap:1rem;"><button class="hamburger" onclick="toggleSidebar()">☰</button><a href="index.html" class="logo">⬛ StudySmart Docs</a></div><div class="nav-links"><a href="index.html">HOME</a><a href="quick-start.html">QUICK START</a><a href="installation.html">INSTALL</a><a href="user-manual.html">MANUAL</a><button class="toggle-mode" onclick="toggleTheme()">☀/☾</button></div></nav>
+<div class="overlay" id="overlay" onclick="toggleSidebar()"></div>
+<aside id="sidebar">
+    <div class="sidebar-section"><h6>◆ General</h6><a href="index.html" class="sidebar-link">🏠 Home</a><a href="quick-start.html" class="sidebar-link">⚡ Quick Start</a><a href="installation.html" class="sidebar-link">📦 Installation</a><a href="user-manual.html" class="sidebar-link">📖 User Manual</a></div>
+    <div class="sidebar-section"><h6>◆ Source Code</h6><a href="main-py.html" class="sidebar-link">main.py</a><a href="langadb-controllers.html" class="sidebar-link">LangaDB/controllers.py</a><a href="config.html" class="sidebar-link">config.py</a><a href="config4test.html" class="sidebar-link">config4test.py</a><a href="auth-controllers.html" class="sidebar-link" style="color:var(--accent-pink);opacity:0.6;text-decoration:line-through;" title="NOT USED"">auth/controllers.py</a><a href="auth-session.html" class="sidebar-link" style="color:var(--accent-pink);opacity:0.6;text-decoration:line-through;" title="NOT USED"">auth/session.py</a><a href="calculate-priority.html" class="sidebar-link">calculate_priority.py</a><a href="product.html" class="sidebar-link">product.py</a><a href="create-assignments.html" class="sidebar-link">create/assignments.py</a><a href="read-assignments.html" class="sidebar-link">read/assignments.py</a><a href="update-mark-as-done.html" class="sidebar-link">update/mark_as_done.py</a><a href="delete-assignment.html" class="sidebar-link">delete/assignment.py</a></div>
+    <div class="sidebar-section"><h6>◆ Configuration</h6><a href="requirements-txt.html" class="sidebar-link">requirements.txt</a><a href="pyproject-toml.html" class="sidebar-link">pyproject.toml</a><a href="ci-workflow.html" class="sidebar-link">CI/CD Workflow</a></div>
+    <div class="sidebar-section"><h6>◆ Tests</h6><a href="test-create-assignment.html" class="sidebar-link">test_create_assignment.py</a><a href="test-read-assignment.html" class="sidebar-link">test_read_assignment.py</a><a href="test-update-mark.html" class="sidebar-link">test_update_mark.py</a><a href="test-delete.html" class="sidebar-link">test_delete.py</a><a href="test-calculate-priority.html" class="sidebar-link">test_calculate_priority.py</a><a href="test-priority-level.html" class="sidebar-link">test_priority_level.py</a></div>
+    <div class="sidebar-section"><h6>◆ Project</h6><a href="directory-structure.html" class="sidebar-link active">📁 Directory Structure</a></div>
+</aside>
+<main id="main-content">
+    <h1 class="section-title">📁 Project Directory Structure</h1>
+    <div class="file-path">📁 StudySmart/ — Complete project tree</div>
+
+    <div class="overview-box">
+        <h3>🔍 Why does directory structure matter?</h3>
+        <p>In programming, <strong>how you organize your files is just as important as the code itself</strong>.
+        A well-organized project is easier to navigate, maintain, and collaborate on. StudySmart follows
+        a standard Python project structure that separates source code, tests, configuration, and documentation
+        into clear directories. Understanding this structure helps you know exactly where to find
+        (or add) any piece of functionality.</p>
+    </div>
+
+    <h3 style="font-size:0.6rem;color:var(--accent-yellow);margin-bottom:1rem;">🌳 Full Directory Tree</h3>
+    <div class="arch-box">StudySmart/
+├── main.py                          <span class="code-comment">← Entry point (start here!)</span>
+├── requirements.txt                 <span class="code-comment">← Python dependencies</span>
+├── pyproject.toml                   <span class="code-comment">← pytest configuration</span>
+├── README.md                        <span class="code-comment">← Project description</span>
+├── LICENSE                          <span class="code-comment">← MIT License</span>
+├── .gitignore                       <span class="code-comment">← Files to ignore in git</span>
+│
+├── src/                             <span class="code-comment">← ALL SOURCE CODE lives here</span>
+│   ├── __init__.py                  <span class="code-comment">← Makes src a Python package</span>
+│   │
+│   ├── LangaDB/                     <span class="code-comment">← Custom JSON database engine</span>
+│   │   ├── __init__.py
+│   │   └── controllers.py           <span class="code-comment">← LangaDB class (CRUD operations)</span>
+│   │
+│   ├── data_processing_module/      <span class="code-comment">← Database initialization</span>
+│   │   ├── __init__.py
+│   │   ├── config.py                <span class="code-comment">← Real database setup</span>
+│   │   └── config4test.py           <span class="code-comment">← Test database setup</span>
+│   │
+│   ├── data/                        <span class="code-comment">← Actual data files (JSON)</span>
+│   │   ├── assignments.json         <span class="code-comment">← Real assignments data</span>
+│   │   ├── users.json               <span class="code-comment">← Real users data</span>
+│   │   ├── session.txt              <span class="code-comment">← Current login session</span>
+│   │   └── test/                    <span class="code-comment">← Test data (separate from real)</span>
+│   │       ├── assignments.json
+│   │       ├── users.json
+│   │       └── session.txt
+│   │
+│   └── core/                        <span class="code-comment">← All business logic</span>
+│       ├── __init__.py
+│       │
+│       ├── authentication/          <span class="code-comment">← Login/Register system (NOT USED)</span>
+│       │   ├── __init__.py
+│       │   ├── controllers.py       <span class="code-comment">← SignUp, LogIn, LogOut (NOT USED)</span>
+│       │   └── session.py           <span class="code-comment">← Session management (NOT USED)</span>
+│       │
+│       ├── common/                  <span class="code-comment">← Shared utilities</span>
+│       │   ├── __init__.py
+│       │   ├── calculate_priority.py <span class="code-comment">← Priority scoring algorithm</span>
+│       │   └── product.py           <span class="code-comment">← Main menu loop (product.py)</span>
+│       │
+│       ├── create/                  <span class="code-comment">← CREATE operations</span>
+│       │   ├── __init__.py
+│       │   └── assignments.py       <span class="code-comment">← add_assignment()</span>
+│       │
+│       ├── read/                    <span class="code-comment">← READ operations</span>
+│       │   ├── __init__.py
+│       │   └── assignments.py       <span class="code-comment">← view_assignments(), summary()</span>
+│       │
+│       ├── update/                  <span class="code-comment">← UPDATE operations</span>
+│       │   ├── __init__.py
+│       │   └── mark_as_done.py      <span class="code-comment">← mark_completed(), undo()</span>
+│       │
+│       └── delete/                  <span class="code-comment">← DELETE operations</span>
+│           ├── __init__.py
+│           └── assignment.py        <span class="code-comment">← delete_assignment()</span>
+│
+├── tests/                           <span class="code-comment">← ALL TESTS live here</span>
+│   ├── __init__.py
+│   ├── common/
+│   │   └── priority_calculate/
+│   │       ├── __init__.py
+│   │       ├── test_calculate.py    <span class="code-comment">← Tests for priority scoring</span>
+│   │       └── test_leveling.py     <span class="code-comment">← Tests for priority levels</span>
+│   ├── create/
+│   │   ├── __init__.py
+│   │   └── test_assignment.py       <span class="code-comment">← Tests for adding assignments</span>
+│   ├── read/
+│   │   ├── __init__.py
+│   │   └── test_assignment.py       <span class="code-comment">← Tests for viewing assignments</span>
+│   ├── update/
+│   │   ├── __init__.py
+│   │   └── test_mark_completed.py   <span class="code-comment">← Tests for mark complete/undo</span>
+│   └── delete/
+│       ├── __init__.py
+│       └── test_delete.py           <span class="code-comment">← Tests for deleting assignments</span>
+│
+├── instruction/                     <span class="code-comment">← Team documentation (not code)</span>
+│   ├── devteam/
+│   │   ├── instructor.md
+│   │   ├── hello.txt
+│   │   ├── Git&GitHub/
+│   │   │   ├── English.md
+│   │   │   └── Vietnamese.md
+│   │   └── LangaDB/
+│   │       ├── English_Instruction.md
+│   │       └── Vietnamese_Instruction.md
+│   └── player/
+│       └── instructor.md
+│
+└── .github/
+    └── workflows/
+        └── continious_integration.yml <span class="code-comment">← CI/CD pipeline</span></div>
+
+    <h3 style="font-size:0.6rem;color:var(--accent-yellow);margin:2rem 0 1rem;">🏗️ How the Directories Connect</h3>
+
+    <div class="overview-box" style="border-color:var(--accent-blue);">
+        <h3 style="color:var(--accent-blue);">📐 Architecture Flow</h3>
+        <p>When you run <code>python main.py</code>, here's the chain of imports that happens:</p>
+        <div class="arch-box" style="font-size:12px;">main.py
+  └── imports → src/LangaDB/controllers.py    <span class="code-comment">(database engine)</span>
+  └── imports → src/data_processing_module/config.py  <span class="code-comment">(initialize DB)</span>
+        └── creates → src/data/users.json     <span class="code-comment">(user data)</span>
+        └── creates → src/data/assignments.json <span class="code-comment">(assignment data)</span>
+  └── imports → src/core/authentication/controllers.py <span class="code-comment">(login system - NOT USED)</span>
+  └── imports → src/core/common/product.py    <span class="code-comment">(main menu)</span>
+        ├── imports → src/core/create/assignments.py  <span class="code-comment">(add new)</span>
+        ├── imports → src/core/read/assignments.py    <span class="code-comment">(view all)</span>
+        ├── imports → src/core/update/mark_as_done.py <span class="code-comment">(mark done)</span>
+        ├── imports → src/core/delete/assignment.py   <span class="code-comment">(remove)</span>
+        └── imports → src/core/common/calculate_priority.py <span class="code-comment">(scoring)</span></div>
+    </div>
+
+    <h3 style="font-size:0.6rem;color:var(--accent-yellow);margin:2rem 0 1rem;">📂 Directory Explanations</h3>
+
+    <div class="explain-box">
+        <h4>📄 main.py — The Front Door</h4>
+        <p>This is the <strong>entry point</strong> — the first file Python reads when you run the program.
+        It imports the database engine and configuration, then calls the main menu.
+        See <a href="main-py.html" style="color:var(--accent-cyan);">main.py documentation</a>.</p>
+    </div>
+
+    <div class="explain-box">
+        <h4>🗄️ src/LangaDB/ — The Database Engine</h4>
+        <p><strong>LangaDB</strong> is a <strong>custom-built JSON database</strong> created by the team.
+        Instead of using SQLite or MySQL, they wrote their own mini-database that reads and writes
+        JSON files. This is impressive for a student project! The <code>controllers.py</code> file
+        contains the <code>LangaDB</code> class with methods like <code>save()</code>, <code>all()</code>,
+        <code>find()</code>, <code>query()</code>, and more.
+        See <a href="langadb-controllers.html" style="color:var(--accent-cyan);">LangaDB documentation</a>.</p>
+    </div>
+
+    <div class="explain-box">
+        <h4>⚙️ src/data_processing_module/ — Database Setup</h4>
+        <p>Contains two files: <code>config.py</code> creates the real database instances for Users and
+        Assignments, while <code>config4test.py</code> creates separate test databases. This separation
+        ensures tests never corrupt real user data.</p>
+    </div>
+
+    <div class="explain-box">
+        <h4>💾 src/data/ — Where Data Lives</h4>
+        <p>Contains the actual JSON data files: <code>users.json</code> (registered users), <code>assignments.json</code>
+        (all assignments), and <code>session.txt</code> (current logged-in user). The <code>test/</code>
+        subdirectory holds copies for testing. These files are automatically created when the program
+        runs for the first time.</p>
+    </div>
+
+    <div class="explain-box">
+        <h4>🧩 src/core/ — The Business Logic</h4>
+        <p>This is where all the actual functionality lives, organized by <strong>CRUD operations</strong>:</p>
+        <p>•<strong>authentication/</strong> — Handles user registration (SignUp), login (LogIn), and logout (LogOut). <span style="color:var(--accent-pink);">⚠️ NOT USED in current version.</span></p>
+        <p>• <strong>common/</strong> — Shared utilities: the priority scoring algorithm and the main menu loop
+        that ties everything together.</p>
+        <p>• <strong>create/</strong> — Adding new assignments with input validation.</p>
+        <p>• <strong>read/</strong> — Viewing assignments, filtering by status, sorting by priority, and
+        displaying completion statistics.</p>
+        <p>• <strong>update/</strong> — Marking assignments as completed or undoing completion.</p>
+        <p>• <strong>delete/</strong> — Removing assignments from the database.</p>
+    </div>
+
+    <div class="explain-box">
+        <h4>🧪 tests/ — Quality Assurance</h4>
+        <p>Contains <strong>unit tests</strong> that verify each feature works correctly. The test directory
+        mirrors the source code structure: <code>tests/create/</code> tests <code>src/core/create/</code>,
+        <code>tests/read/</code> tests <code>src/core/read/</code>, etc. Each test file uses
+        <code>monkeypatch</code> to simulate user input and <code>assert</code> to verify results.
+        Run all tests with <code>pytest</code> from the project root.</p>
+    </div>
+
+    <div class="explain-box">
+        <h4>📋 instruction/ — Team Documentation</h4>
+        <p>Contains learning materials and instructions for the development team. Includes guides
+        for Git/GitHub workflows (in both English and Vietnamese) and LangaDB usage instructions.
+        These are <strong>not part of the running program</strong> — they're reference docs for the developers.</p>
+    </div>
+
+    <div class="explain-box">
+        <h4>🔄 .github/workflows/ — Automated Testing</h4>
+        <p>Contains the <strong>GitHub Actions CI/CD pipeline</strong> configuration. Whenever code is pushed
+        to GitHub, this workflow automatically runs all tests to catch bugs early.
+        See <a href="ci-workflow.html" style="color:var(--accent-cyan);">CI/CD documentation</a>.</p>
+    </div>
+
+    <h3 style="font-size:0.6rem;color:var(--accent-yellow);margin:2rem 0 1rem;">📊 File Count Summary</h3>
+    <div class="overview-box" style="border-color:var(--accent-green);">
+        <h3 style="color:var(--accent-green);">🔢 By the Numbers</h3>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1rem;margin-top:1rem;">
+            <div class="tech-item">
+                <h5>51</h5>
+                <p>Total Files</p>
+            </div>
+            <div class="tech-item">
+                <h5>12</h5>
+                <p>Source Code Files</p>
+            </div>
+            <div class="tech-item">
+                <h5>6</h5>
+                <p>Test Files</p>
+            </div>
+            <div class="tech-item">
+                <h5>3</h5>
+                <p>Data Files</p>
+            </div>
+            <div class="tech-item">
+                <h5>5</h5>
+                <p>Config Files</p>
+            </div>
+            <div class="tech-item">
+                <h5>8</h5>
+                <p>Instruction Docs</p>
+            </div>
+            <div class="tech-item">
+                <h5>12</h5>
+                <p>__init__.py Files</p>
+            </div>
+            <div class="tech-item">
+                <h5>1</h5>
+                <p>CI/CD Pipeline</p>
+            </div>
+        </div>
+    </div>
+
+    <h3 style="font-size:0.6rem;color:var(--accent-yellow);margin:2rem 0 1rem;">🎯 Key Naming Conventions</h3>
+
+    <div class="overview-box" style="border-color:var(--accent-pink);">
+        <h3 style="color:var(--accent-pink);">📝 Python Naming Rules Used</h3>
+        <p>• <code>__init__.py</code> — Every directory that Python should treat as a "package" needs this file.
+        It can be empty (like most in this project) or contain initialization code.</p>
+        <p>• <strong>snake_case</strong> — All file names use lowercase with underscores: <code>mark_as_done.py</code>,
+        <code>calculate_priority.py</code>. This is the standard Python convention.</p>
+        <p>• <strong>test_ prefix</strong> — All test files start with <code>test_</code> so pytest can
+        automatically discover them: <code>test_assignment.py</code>, <code>test_delete.py</code>.</p>
+        <p>• <strong>controllers.py</strong> — Files named "controllers" contain the main logic for their
+        module (LangaDB engine, <span style="color:var(--accent-pink);">authentication (not used)</span>).</p>
+        <p>• <strong>config.py / config4test.py</strong> — Configuration files. The <code>4test</code> suffix
+        indicates it's for testing only.</p>
+    </div>
+
+    <div class="info-box">
+        <h4>💡 Tip: The CRUD Pattern</h4>
+        <p>Notice how <code>src/core/</code> is organized into <code>create/</code>, <code>read/</code>,
+        <code>update/</code>, and <code>delete/</code> directories. This is the <strong>CRUD pattern</strong>
+        — a fundamental concept in software engineering. CRUD stands for:
+        <br><br>
+        <strong>C</strong>reate — Add new data (create/assignments.py)
+        <br><strong>R</strong>ead — View existing data (read/assignments.py)
+        <br><strong>U</strong>pdate — Modify existing data (update/mark_as_done.py)
+        <br><strong>D</strong>estroy — Remove data (delete/assignment.py)
+        <br><br>
+        Almost every application that works with data follows this pattern!</p>
+    </div>
+</main>
+<footer><p>StudySmart Documentation • THE HEIST • MIT License © 2026</p></footer>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="script.js"></script>
+</body>
+</html>
