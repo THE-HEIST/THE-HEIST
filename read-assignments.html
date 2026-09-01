@@ -31,7 +31,7 @@
     <h3 style="font-size:0.6rem;color:var(--accent-yellow);margin-bottom:1rem;">📝 Full Source Code</h3>
     <div class="code-block"><span class="code-keyword">from</span> src.data_processing_module.config <span class="code-keyword">import</span> Assignments
 
-<span class="code-keyword">def</span> view_order_by_undone(Assignments=Assignments, sort_key=<span class="code-string">"score"</span>, reverse=<span class="code-keyword">True</span>, session=<span class="code-keyword">None</span>):
+<span class="code-keyword">def</span> view_order_by_undone(Assignments=Assignments, sort_key=<span class="code-string">"score"</span>, reverse=<span class="code-keyword">True</span>):
     assignments = Assignments.all(<span class="code-string">'assignments'</span>)
     a = []
     <span class="code-keyword">for</span> i <span class="code-keyword">in</span> assignments:
@@ -39,7 +39,7 @@
             a.append(i)
     <span class="code-keyword">return</span> sorted(a, key=<span class="code-keyword">lambda</span> x: x[sort_key], reverse=reverse)
 
-<span class="code-keyword">def</span> view_order_by_done(Assignments=Assignments, sort_key=<span class="code-string">"score"</span>, reverse=<span class="code-keyword">True</span>, session=<span class="code-keyword">None</span>):
+<span class="code-keyword">def</span> view_order_by_done(Assignments=Assignments, sort_key=<span class="code-string">"score"</span>, reverse=<span class="code-keyword">True</span>):
     assignments = Assignments.all(<span class="code-string">'assignments'</span>)
     a = []
     <span class="code-keyword">for</span> i <span class="code-keyword">in</span> assignments:
@@ -47,7 +47,7 @@
             a.append(i)
     <span class="code-keyword">return</span> sorted(a, key=<span class="code-keyword">lambda</span> x: x.get(sort_key,0), reverse=reverse)
 
-<span class="code-keyword">def</span> view_order_all(Assignments=Assignments, sort_key=<span class="code-string">"score"</span>, reverse=<span class="code-keyword">True</span>, session=<span class="code-keyword">None</span>):
+<span class="code-keyword">def</span> view_order_all(Assignments=Assignments, sort_key=<span class="code-string">"score"</span>, reverse=<span class="code-keyword">True</span>):
     assignments = Assignments.all(<span class="code-string">'assignments'</span>)
     <span class="code-keyword">return</span> sorted(assignments, key=<span class="code-keyword">lambda</span> x: x.get(sort_key,0), reverse=reverse)
 
@@ -71,7 +71,7 @@
             print(<span class="code-string">"{:&lt;5} {:&lt;20} {:&lt;15} {:&lt;12} {:&lt;15} {:&lt;8} {:&lt;10}"</span>.format(*row))
 
 <span class="code-keyword">def</span> show_study_summary(assignments):
-    total_assignments = len(assignments)
+    total_assignments = len(assignments) <span class="code-keyword">if</span> assignments <span class="code-keyword">is not None</span> <span class="code-keyword">else</span> 0
     completed_count = 0
     incomplete_count = 0
     <span class="code-keyword">for</span> assignment <span class="code-keyword">in</span> assignments:

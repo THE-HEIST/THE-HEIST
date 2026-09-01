@@ -126,14 +126,14 @@
         there should be 0 assignments left. If this assertion fails, pytest reports a test failure.</p>
     </div>
 
-    <div class="warn-box">
-        <h4>⚠️ Important Note</h4>
-        <p>This test relies on the <code>delete()</code> method existing in LangaDB. However, looking at the
-        LangaDB source code in <a href="langadb-controllers.html" style="color:var(--accent-pink);">controllers.py</a>,
-        the <code>delete()</code> method is <strong>not explicitly defined</strong>. The
-        <code>delete_assignment()</code> function in <a href="delete-assignment.html" style="color:var(--accent-pink);">assignment.py</a>
-        calls <code>Assignments.delete()</code>, which means this feature may not work as expected.
-        This is a known incomplete feature in the project.</p>
+    <div class="info-box">
+        <h4>💡 How delete() Works in LangaDB</h4>
+        <p>The <code>Assignments.delete("assignments", "id", selected_number)</code> call inside
+        <a href="delete-assignment.html" style="color:var(--accent-cyan);">assignment.py</a> uses
+        LangaDB's <code>delete()</code> method, which is defined in
+        <a href="langadb-controllers.html" style="color:var(--accent-cyan);">controllers.py</a>.
+        It iterates through the list, finds the matching item by field name and value, and removes it
+        using <code>del</code>.</p>
     </div>
 
     <div class="info-box">

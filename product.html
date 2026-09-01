@@ -31,6 +31,7 @@
     </div>
     <h3 style="font-size:0.6rem;color:var(--accent-yellow);margin-bottom:1rem;">📝 Full Source Code</h3>
     <div class="code-block"><span class="code-keyword">from</span> src.data_processing_module.config <span class="code-keyword">import</span> Assignments
+<span class="code-keyword">from</span> src.core.delete.assignment <span class="code-keyword">import</span> delete_assignment
 <span class="code-keyword">from</span> src.core.common.calculate_priority <span class="code-keyword">import</span> re_calculate_priority
 <span class="code-keyword">from</span> src.core.read.assignments <span class="code-keyword">import</span> view_assignments, view_order_by_undone, view_order_by_done, view_order_all, show_study_summary
 <span class="code-keyword">from</span> src.core.create.assignments <span class="code-keyword">import</span> add_assignment
@@ -50,7 +51,7 @@
         print(<span class="code-string">"{:&lt;5} {:&lt;35}"</span>.format(no, name))
     print()
 
-<span class="code-keyword">def</span> view_func(session=<span class="code-keyword">None</span>, Assignments=Assignments):
+<span class="code-keyword">def</span> view_func(Assignments=Assignments):
     menu = [
         (1, <span class="code-string">"View Undone Assignments"</span>),
         (2, <span class="code-string">"View Done Assignments"</span>),
@@ -60,13 +61,13 @@
     sub_choice = int(input(<span class="code-string">"Enter your choice: "</span>))
     print()
     <span class="code-keyword">if</span> sub_choice == 1:
-        assignments = view_order_by_undone(session=session, Assignments=Assignments)
-        view_assignments(Assignments=Assignments, assignments=assignments)
+        assignments = view_order_by_undone()
+        view_assignments(assignments=assignments)
     <span class="code-keyword">elif</span> sub_choice == 2:
-        assignments = view_order_by_done(session=session, Assignments=Assignments)
+        assignments = view_order_by_done(Assignments=Assignments)
         view_assignments(Assignments=Assignments, assignments=assignments)
     <span class="code-keyword">elif</span> sub_choice == 3:
-        assignments = view_order_all(session=session, Assignments=Assignments)
+        assignments = view_order_all(Assignments=Assignments)
         view_assignments(Assignments=Assignments, assignments=assignments)
 
 <span class="code-keyword">def</span> clear_terminal():
@@ -78,12 +79,13 @@
     menu = [
         (1, <span class="code-string">"View Assignments"</span>),
         (2, <span class="code-string">"Add Assignment"</span>),
-        (3, <span class="code-string">"Mark Assignment as Done"</span>),
-        (4, <span class="code-string">"Undo Mark Assignment as Done"</span>),
-        (5, <span class="code-string">"Show Study Summary"</span>),
-        (6, <span class="code-string">"Clear Terminal"</span>),
-        (0, <span class="code-string">"Exit"</span>),
-    ]
+        (3, <span class="code-string">"Delete Assignment"</span>),
+        (4, <span class="code-string">"Mark Assignment as Done"</span>),
+        (5, <span class="code-string">"Undo Mark Assignment as Done"</span>),
+        (6, <span class="code-string">"Show Study Summary"</span>),
+        (7, <span class="code-string">"Clear Terminal"</span>),
+            (0, <span class="code-string">"Exit"</span>),
+        ]
     <span class="code-keyword">while True</span>:
         print(f<span class="code-string">"\nWelcome back!"</span>)
         print_menu(menu)
@@ -95,12 +97,14 @@
             <span class="code-keyword">elif</span> choice == 2:
                 add_assignment()
             <span class="code-keyword">elif</span> choice == 3:
-                mark_completed(assignments=view_order_by_undone())
+                delete_assignment(assignments=view_order_all())
             <span class="code-keyword">elif</span> choice == 4:
-                undo_mark_as_done(assignments=view_order_by_done())
+                mark_completed(assignments=view_order_by_undone())
             <span class="code-keyword">elif</span> choice == 5:
-                show_study_summary(assignments=view_order_all())
+                undo_mark_as_done(assignments=view_order_by_done())
             <span class="code-keyword">elif</span> choice == 6:
+                show_study_summary(assignments=view_order_all())
+            <span class="code-keyword">elif</span> choice == 7:
                 clear_terminal()
             <span class="code-keyword">elif</span> choice == 0:
                 print(<span class="code-string">"Good Bye!"</span>)
@@ -142,7 +146,7 @@
         <p>1. <code>check_priority_new_day()</code> — Recalculates priorities first</p>
         <p>2. <code>while True:</code> — Creates an infinite loop that keeps showing the menu</p>
         <p>3. Displays the menu and asks for user input</p>
-        <p>4. Routes to the correct function based on the choice (1-6 or 0)</p>
+        <p>4. Routes to the correct function based on the choice (1-7 or 0)</p>
         <p>5. Choice 0 breaks the loop and exits</p>
         <p>6. <code>try/except ValueError</code> — Catches invalid input (if user types text instead of a number)</p>
         <p><strong>This is the heart of the application</strong> — it runs forever until the user chooses to exit.</p>

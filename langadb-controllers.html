@@ -146,7 +146,16 @@
         <span class="code-keyword">elif</span> isinstance(self.data, list):
             <span class="code-keyword">return</span> len(self.data)
         <span class="code-keyword">else</span>:
-            <span class="code-keyword">return</span> 0</div>
+            <span class="code-keyword">return</span> 0
+
+    <span class="code-keyword">def</span> delete(self, list_key, field_name, value):
+        items = self.data <span class="code-keyword">if</span> isinstance(self.data, list) <span class="code-keyword">else</span> self.query(list_key, [])
+        <span class="code-keyword">if</span> isinstance(items, list):
+            <span class="code-keyword">for</span> i, item <span class="code-keyword">in</span> enumerate(items):
+                <span class="code-keyword">if</span> isinstance(item, dict) <span class="code-keyword">and</span> item.get(field_name) == value:
+                    <span class="code-keyword">del</span> items[i]
+                    <span class="code-keyword">return</span> self.save(self.data)
+        <span class="code-keyword">return False</span></div>
 
     <!-- EXPLANATIONS -->
     <h3 style="font-size:0.6rem;color:var(--accent-yellow);margin:1.5rem 0 1rem;">📖 Line-by-Line Explanation</h3>
@@ -347,6 +356,26 @@
         items exist.</p>
     </div>
 
+    <div class="explain-box">
+        <h4>Lines 107-114: delete() Method</h4>
+        <div class="code-block" style="font-size:0.6rem;"><span class="code-keyword">def</span> delete(self, list_key, field_name, value):
+    items = self.data <span class="code-keyword">if</span> isinstance(self.data, list) <span class="code-keyword">else</span> self.query(list_key, [])
+    <span class="code-keyword">if</span> isinstance(items, list):
+        <span class="code-keyword">for</span> i, item <span class="code-keyword">in</span> enumerate(items):
+            <span class="code-keyword">if</span> isinstance(item, dict) <span class="code-keyword">and</span> item.get(field_name) == value:
+                <span class="code-keyword">del</span> items[i]
+                <span class="code-keyword">return</span> self.save(self.data)
+    <span class="code-keyword">return False</span></div>
+        <p>Removes one specific item from the list by matching a field value.</p>
+        <p><strong>Example:</strong> <code>delete("assignments", "id", 3)</code> finds the assignment
+        with <code>id == 3</code> and removes it from the list.</p>
+        <p>→ <code>enumerate(items)</code> — Loops through the list while keeping track of the index
+        number (<code>i</code>) for each item.</p>
+        <p>→ <code>del items[i]</code> — Removes the item at index <code>i</code> from the list.</p>
+        <p>→ After deletion, saves the updated data back to the file.</p>
+        <p>→ Returns <code>True</code> (from <code>save()</code>) on success, or <code>False</code> if no matching item was found.</p>
+    </div>
+
     <div class="overview-box" style="border-color:var(--accent-yellow);">
         <h3 style="color:var(--accent-yellow);">🔗 How Other Files Use LangaDB</h3>
         <p>→ <a href="config.html" style="color:var(--accent-green);">config.py</a> creates two LangaDB instances: one for users, one for assignments</p>
@@ -354,6 +383,7 @@
         <p>→ <a href="read-assignments.html" style="color:var(--accent-green);">assignments.py (read)</a> uses <code>all()</code> to load all assignments</p>
         <p>→ <a href="auth-controllers.html" style="color:var(--accent-green);">auth/controllers.py</a> uses <code>find()</code> to look up users</p>
         <p>→ <a href="update-mark-as-done.html" style="color:var(--accent-green);">mark_as_done.py</a> uses <code>update()</code> to change completion status</p>
+        <p>→ <a href="delete-assignment.html" style="color:var(--accent-green);">assignment.py (delete)</a> uses <code>delete()</code> to remove assignments</p>
     </div>
 </main>
 

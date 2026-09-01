@@ -68,17 +68,17 @@
         <p>5. Find the assignment and delete it</p>
     </div>
     <div class="explain-box">
-        <h4>The Missing delete() Method</h4>
-        <p><code>Assignments.delete("assignments", "id", selected_number)</code> — This line tries to
-        call a <code>delete()</code> method on the LangaDB object, but looking at
-        <a href="langadb-controllers.html" style="color:var(--accent-green);">LangaDB/controllers.py</a>,
-        there is no <code>delete()</code> method defined. This means:</p>
-        <p>→ Running this function would cause an <code>AttributeError</code></p>
-        <p>→ The function is not connected to the main menu</p>
-        <p>→ This is an <strong>incomplete feature</strong> — the students started implementing it
-        but didn't finish</p>
-        <p><strong>To fix this:</strong> A <code>delete()</code> method would need to be added to
-        the LangaDB class that finds and removes an item from the list by field name/value.</p>
+        <h4>Assignments.delete() — The LangaDB Method</h4>
+        <p><code>Assignments.delete("assignments", "id", selected_number)</code> — This line calls
+        the <code>delete()</code> method on the LangaDB object. The method is defined in
+        <a href="langadb-controllers.html" style="color:var(--accent-cyan);">LangaDB/controllers.py</a>
+        and works by:</p>
+        <p>1. Getting the list of items from the database</p>
+        <p>2. Looping through each item with its index number</p>
+        <p>3. Checking if the item's field matches the value (e.g., <code>id == selected_number</code>)</p>
+        <p>4. If found, removing it from the list using <code>del items[i]</code></p>
+        <p>5. Saving the updated data back to the JSON file</p>
+        <p>If no matching item is found, it returns <code>False</code>.</p>
     </div>
 </main>
 <footer><p>StudySmart Documentation • THE HEIST • MIT License © 2026</p></footer>

@@ -34,7 +34,7 @@
 <span class="code-keyword">from</span> src.core.common.calculate_priority <span class="code-keyword">import</span> *
 <span class="code-keyword">from</span> datetime <span class="code-keyword">import</span> datetime, timedelta
 
-<span class="code-keyword">def</span> add_assignment(Assignments=Assignments, Users=Users, test=<span class="code-keyword">None</span>):
+<span class="code-keyword">def</span> add_assignment(Assignments=Assignments):
     assignment_name = input(<span class="code-string">"Assignment name:"</span>)
     <span class="code-keyword">while</span> assignment_name == <span class="code-string">""</span>:
         print(<span class="code-string">"Assignment name cannot be empty!"</span>)
@@ -56,7 +56,7 @@
             <span class="code-keyword">break</span>
         <span class="code-keyword">except</span> ValueError:
             print(<span class="code-string">"Invalid input! Please enter a valid integer for difficulty level."</span>)
-            <span class="code-keyword">return</span> 400
+            <span class="code-keyword">return False</span>
 
     <span class="code-keyword">while True</span>:
         <span class="code-keyword">try</span>:
@@ -65,7 +65,7 @@
             <span class="code-keyword">break</span>
         <span class="code-keyword">except</span> ValueError:
             deadline = input(<span class="code-string">"Invalid date format! Please enter the deadline in the format yyyy-mm-dd:"</span>)
-            <span class="code-keyword">return</span> 400
+            <span class="code-keyword">return False</span>
 
     <span class="code-keyword">while True</span>:
         <span class="code-keyword">while</span> difficulty &lt; 1 <span class="code-keyword">or</span> difficulty > 5:
@@ -86,7 +86,7 @@
     assignment[<span class="code-string">"level"</span>] = get_priority_level(assignment[<span class="code-string">"score"</span>])
 
     Assignments.add(<span class="code-string">"assignments"</span>, assignment)
-    <span class="code-keyword">return</span> 200</div>
+    <span class="code-keyword">return True</span></div>
     <h3 style="font-size:0.6rem;color:var(--accent-yellow);margin:1.5rem 0 1rem;">📖 Key Parts Explained</h3>
     <div class="explain-box">
         <h4>Input Collection with Validation</h4>
@@ -111,10 +111,10 @@
         before saving. The assignment starts with <code>"completed": False</code> (not done yet).</p>
     </div>
     <div class="explain-box">
-        <h4>Return Codes</h4>
-        <p>→ <code>return 200</code> — Success (like HTTP 200 OK)</p>
-        <p>→ <code>return 400</code> — Bad input (like HTTP 400 Bad Request)</p>
-        <p>These codes let the caller (tests) know if the operation succeeded or failed.</p>
+        <h4>Return Values</h4>
+        <p>→ <code>return True</code> — Success (assignment was added successfully)</p>
+        <p>→ <code>return False</code> — Bad input (invalid difficulty or date format)</p>
+        <p>These return values let the caller (tests) know if the operation succeeded or failed.</p>
     </div>
 </main>
 <footer><p>StudySmart Documentation • THE HEIST • MIT License © 2026</p></footer>

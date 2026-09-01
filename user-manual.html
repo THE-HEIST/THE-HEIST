@@ -75,10 +75,11 @@
 ---------------------------------------------
 1     View Assignments
 2     Add Assignment
-3     Mark Assignment as Done
-4     Undo Mark Assignment as Done
-5     Show Study Summary
-6     Clear Terminal
+3     Delete Assignment
+4     Mark Assignment as Done
+5     Undo Mark Assignment as Done
+6     Show Study Summary
+7     Clear Terminal
 0     Exit</div>
         <p>Type the number of the feature you want and press Enter. Type <code>0</code> to exit the program.</p>
     </div>
@@ -142,8 +143,25 @@ Difficulty level (1 to 5): <span style="color:var(--accent-yellow);">3</span></d
 
     <!-- MARK DONE -->
     <div class="step-box">
-        <h3>✅ Marking an Assignment as Done (Option 3)</h3>
-        <p>Choose option 3 to mark an assignment as completed:</p>
+        <h3>🗑 Deleting an Assignment (Option 3)</h3>
+        <p>Choose option 3 to delete an assignment:</p>
+        <div class="code-block"><span class="code-comment"># First, view all assignments to see the ID</span>
+Enter your choice: <span class="code-cmd">1</span>
+Then choose: <span class="code-cmd">3</span> (View All Assignments)
+
+<span class="code-comment"># Then delete (choose option 3)</span>
+Enter your choice: <span class="code-cmd">3</span>
+Enter the assignment number to delete: <span class="code-cmd">2</span>
+
+<span class="code-comment"># Result</span>
+Assignment deleted successfully.</div>
+        <p>Enter the <strong>ID number</strong> of the assignment you want to delete. The assignment will be permanently removed.</p>
+
+    </div>
+
+    <div class="step-box">
+        <h3>✅ Marking an Assignment as Done (Option 4)</h3>
+        <p>Choose option 4 to mark an assignment as completed:</p>
         <div class="code-block"><span class="code-comment"># First, view undone assignments</span>
 ID    Assignment Name      Module          Deadline    Difficulty      Score   Completed
 ------------------------------------------------------------------------------------------
@@ -159,8 +177,8 @@ Assignment marked as completed.</div>
 
     <!-- UNDO MARK -->
     <div class="step-box">
-        <h3>↩ Undo Marking as Done (Option 4)</h3>
-        <p>Choose option 4 to undo a completed assignment (mark it as not done again):</p>
+        <h3>↩ Undo Marking as Done (Option 5)</h3>
+        <p>Choose option 5 to undo a completed assignment (mark it as not done again):</p>
         <div class="code-block"><span class="code-comment"># View done assignments</span>
 ID    Assignment Name      Module          Deadline    Difficulty      Score   Completed
 ------------------------------------------------------------------------------------------
@@ -175,8 +193,8 @@ Assignment marked as not completed.</div>
 
     <!-- STUDY SUMMARY -->
     <div class="step-box">
-        <h3>📊 Study Summary (Option 5)</h3>
-        <p>Choose option 5 to see your progress statistics:</p>
+        <h3>📊 Study Summary (Option 6)</h3>
+        <p>Choose option 6 to see your progress statistics:</p>
         <div class="menu-output">Total assignments: 5
 Completed: 2
 Incomplete: 3
@@ -233,7 +251,7 @@ score = 2 / (10 + 1) = <span class="code-cmd">0.18</span>  → <span style="colo
         <p>→ Dates must be in format <code>YYYY-MM-DD</code> (e.g., 2026-12-31).</p>
         <p>→ Difficulty must be a whole number from 1 to 5.</p>
         <p>→ If you type something invalid, the program will ask you to try again.</p>
-        <p>→ Use option 6 (Clear Terminal) to clean up your screen.</p>
+        <p>→ Use option 7 (Clear Terminal) to clean up your screen.</p>
     </div>
 </main>
 
