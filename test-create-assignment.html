@@ -37,7 +37,7 @@
     <div class="explain-box">
         <h4>test_add_assignment — Happy Path</h4>
         <p>Provides valid inputs: name="Test Assignment", module="Test Module", deadline="2024-12-31",
-        difficulty="3". Expects return code 200 (success) and verifies the assignment was saved.</p>
+        difficulty="3". Expects <code>return True</code> (success) and verifies the assignment was saved.</p>
     </div>
     <div class="explain-box">
         <h4>test_add_assignment_invalid_difficulty</h4>
@@ -46,14 +46,15 @@
     </div>
     <div class="explain-box">
         <h4>test_add_assignment_empty_fields</h4>
-        <p>Sends empty strings for name, module, and deadline. Each empty field triggers the
-        "cannot be empty" loop, then valid data is provided. Expects return code 400 because
-        the difficulty input also receives an empty string which causes a ValueError.</p>
+        <p>Sends empty strings for name and module (which trigger the "cannot be empty" loops),
+        then provides an empty string for deadline (which triggers the ValueError in date parsing).
+        Expects <code>return False</code> because the empty deadline causes a ValueError in
+        <code>datetime.strptime()</code>.</p>
     </div>
     <div class="explain-box">
         <h4>test_add_assignment_invalid_deadline / invalid_deadline_format / invalid_deadline_format2</h4>
         <p>Tests three wrong date formats: "31-12-2024" (DD-MM-YYYY), "2024/12/31" (slashes),
-        and "2024-31-12" (swapped month/day). All should be rejected with return code 400.</p>
+        and "2024-31-12" (swapped month/day). All should be rejected with <code>return False</code>.</p>
     </div>
 </main>
 <footer><p>StudySmart Documentation • THE HEIST • MIT License © 2026</p></footer>

@@ -35,46 +35,45 @@
 <span class="code-keyword">from</span> datetime <span class="code-keyword">import</span> datetime, timedelta
 
 <span class="code-keyword">def</span> add_assignment(Assignments=Assignments):
+    <span class="code-comment"># Prompt user to input information and loop to ensure them are not empty</span>
     assignment_name = input(<span class="code-string">"Assignment name:"</span>)
     <span class="code-keyword">while</span> assignment_name == <span class="code-string">""</span>:
-        print(<span class="code-string">"Assignment name cannot be empty!"</span>)
-        assignment_name = input(<span class="code-string">"Assignment name: "</span>)
+          print(<span class="code-string">"Assignment name cannot be empty!"</span>)
+          assignment_name = input(<span class="code-string">"Assignment name: "</span>)
 
     module_name = input(<span class="code-string">"Module:"</span>)
     <span class="code-keyword">while</span> module_name == <span class="code-string">""</span>:
-        print(<span class="code-string">"Module cannot be empty!"</span>)
-        module_name = input(<span class="code-string">"Module:"</span>)
-
-    deadline = input(<span class="code-string">"Deadline (Ex: yyyy-mm-dd):"</span>)
-    <span class="code-keyword">while</span> deadline == <span class="code-string">""</span>:
-        print(<span class="code-string">"Deadline cannot be empty!"</span>)
-        deadline = input(<span class="code-string">"Deadline (Ex: yyyy-mm-dd): "</span>)
+           print(<span class="code-string">"Module cannot be empty!"</span>)
+           module_name = input(<span class="code-string">"Module:"</span>)
 
     <span class="code-keyword">while True</span>:
         <span class="code-keyword">try</span>:
+            deadline = input(<span class="code-string">"Deadline (Ex: yyyy-mm-dd):"</span>)
+            dl = datetime.strptime(deadline, <span class="code-string">"%Y-%m-%d"</span>).date()
+            <span class="code-keyword">break</span>
+        <span class="code-keyword">except</span> ValueError:
+            print(<span class="code-string">"Invalid date format! Please enter the deadline in the format yyyy-mm-dd."</span>)
+            <span class="code-keyword">return False</span>
+    
+    <span class="code-keyword">while True</span>:
+        <span class="code-keyword">try</span>:
             difficulty = int(input(<span class="code-string">"Difficulty level (1 to 5):"</span>))
+            <span class="code-keyword">while</span> difficulty &lt; 1 <span class="code-keyword">or</span> difficulty > 5:
+                print(<span class="code-string">"---------------------"</span>)
+                print(<span class="code-string">"Please enter level from 1 to 5 !"</span>)
+                print(<span class="code-string">"---------------------"</span>)
+                difficulty = int(input(<span class="code-string">"Difficulty level:"</span>))
             <span class="code-keyword">break</span>
         <span class="code-keyword">except</span> ValueError:
             print(<span class="code-string">"Invalid input! Please enter a valid integer for difficulty level."</span>)
             <span class="code-keyword">return False</span>
 
-    <span class="code-keyword">while True</span>:
-        <span class="code-keyword">try</span>:
-            days_remaining = datetime.strptime(deadline, <span class="code-string">"%Y-%m-%d"</span>).date() - datetime.now().date()
-            days_remaining = days_remaining.days
-            <span class="code-keyword">break</span>
-        <span class="code-keyword">except</span> ValueError:
-            deadline = input(<span class="code-string">"Invalid date format! Please enter the deadline in the format yyyy-mm-dd:"</span>)
-            <span class="code-keyword">return False</span>
-
-    <span class="code-keyword">while True</span>:
-        <span class="code-keyword">while</span> difficulty &lt; 1 <span class="code-keyword">or</span> difficulty > 5:
-            print(<span class="code-string">"Please enter level from 1 to 5 !"</span>)
-            difficulty = int(input(<span class="code-string">"Difficulty level:"</span>))
-        <span class="code-keyword">break</span>
+    <span class="code-comment"># Validate that days remaining is within the valid range ( >0 )</span>
 
     deadline = datetime.strptime(deadline, <span class="code-string">"%Y-%m-%d"</span>).date()
 
+    <span class="code-comment"># Generate unique assignment number based on current list length</span>
+    <span class="code-comment"># Create dictionary containing all assignment details</span>
     assignment = {
         <span class="code-string">"assignment_name"</span>: assignment_name,
         <span class="code-string">"module_name"</span>: module_name,
@@ -84,31 +83,45 @@
     }
     assignment[<span class="code-string">"score"</span>] = calculate_priority_score(assignment)
     assignment[<span class="code-string">"level"</span>] = get_priority_level(assignment[<span class="code-string">"score"</span>])
-
+    <span class="code-comment"># Append the newly created assignment record to the main list</span>
     Assignments.add(<span class="code-string">"assignments"</span>, assignment)
+
     <span class="code-keyword">return True</span></div>
     <h3 style="font-size:0.6rem;color:var(--accent-yellow);margin:1.5rem 0 1rem;">📖 Key Parts Explained</h3>
     <div class="explain-box">
-        <h4>Input Collection with Validation</h4>
+        <h4>Input Collection with Validation (name and module)</h4>
         <p>Each field uses a <code>while</code> loop that keeps asking until a non-empty value is
         provided. This is a simple but effective way to ensure no field is left blank.</p>
         <p><strong>Pattern:</strong> Ask → Check if empty → If empty, show error and ask again</p>
     </div>
     <div class="explain-box">
-        <h4>Difficulty Validation (try/except)</h4>
-        <p><code>int(input(...))</code> is wrapped in <code>try/except ValueError</code>. If the user
-        types "abc" instead of a number, Python would crash. The <code>except</code> catches this
-        and returns error code 400.</p>
+        <h4>Date Validation (try/except — comes BEFORE difficulty)</h4>
+        <p><code>datetime.strptime(deadline, "%Y-%m-%d")</code> tries to parse the date string
+        into a date object. If the format is wrong (e.g., "31-12-2024" instead of "2024-12-31"),
+        it raises a <code>ValueError</code>. The <code>try/except</code> catches this and returns
+        <code>False</code> immediately — the assignment is not created.</p>
+        <p>The variable <code>dl</code> is assigned but not used; it serves purely as a validation check.
+        If parsing succeeds, the code <code>break</code>s out of the loop and continues to difficulty.</p>
     </div>
     <div class="explain-box">
-        <h4>Date Validation</h4>
-        <p><code>datetime.strptime(deadline, "%Y-%m-%d")</code> tries to parse the date. If the format
-        is wrong (e.g., "31-12-2024" instead of "2024-12-31"), it raises a ValueError which is caught.</p>
+        <h4>Difficulty Validation (try/except + nested while loop)</h4>
+        <p>The difficulty input is wrapped in <code>try/except ValueError</code>. If the user types
+        "abc" instead of a number, Python would crash — the <code>except</code> catches this and
+        returns <code>False</code>.</p>
+        <p>Inside the <code>try</code>, a nested <code>while</code> loop checks the range:
+        difficulty must be between 1 and 5. If the user types 6 or 0, it prints an error
+        with dashes for emphasis and asks again.</p>
+        <p><strong>This is a two-layer validation:</strong> First check "is it a number?" (try/except),
+        then check "is it in the right range?" (while loop).</p>
     </div>
     <div class="explain-box">
         <h4>Building the Assignment Dictionary</h4>
         <p>Creates a dictionary with all the fields, then calculates the priority score and level
         before saving. The assignment starts with <code>"completed": False</code> (not done yet).</p>
+        <p><strong>Note:</strong> The source code contains a commented-out block that previously calculated
+        <code>days_remaining</code> from the deadline. This was removed because the priority score is
+        now calculated inside <code>calculate_priority_score()</code>, making the separate calculation
+        unnecessary.</p>
     </div>
     <div class="explain-box">
         <h4>Return Values</h4>

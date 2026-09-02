@@ -37,7 +37,7 @@
     <span class="code-keyword">for</span> i <span class="code-keyword">in</span> assignments:
         <span class="code-keyword">if</span> i.get(<span class="code-string">"completed"</span>) == <span class="code-keyword">False</span>:
             a.append(i)
-    <span class="code-keyword">return</span> sorted(a, key=<span class="code-keyword">lambda</span> x: x[sort_key], reverse=reverse)
+    <span class="code-keyword">return</span> sorted(a, key=<span class="code-keyword">lambda</span> x: x.get(sort_key, 0), reverse=reverse)
 
 <span class="code-keyword">def</span> view_order_by_done(Assignments=Assignments, sort_key=<span class="code-string">"score"</span>, reverse=<span class="code-keyword">True</span>):
     assignments = Assignments.all(<span class="code-string">'assignments'</span>)
@@ -45,14 +45,18 @@
     <span class="code-keyword">for</span> i <span class="code-keyword">in</span> assignments:
         <span class="code-keyword">if</span> i.get(<span class="code-string">"completed"</span>) == <span class="code-keyword">True</span>:
             a.append(i)
-    <span class="code-keyword">return</span> sorted(a, key=<span class="code-keyword">lambda</span> x: x.get(sort_key,0), reverse=reverse)
+    <span class="code-keyword">return</span> sorted(a, key=<span class="code-keyword">lambda</span> x: x.get(sort_key,0),reverse=reverse)
 
 <span class="code-keyword">def</span> view_order_all(Assignments=Assignments, sort_key=<span class="code-string">"score"</span>, reverse=<span class="code-keyword">True</span>):
     assignments = Assignments.all(<span class="code-string">'assignments'</span>)
     <span class="code-keyword">return</span> sorted(assignments, key=<span class="code-keyword">lambda</span> x: x.get(sort_key,0), reverse=reverse)
 
-<span class="code-keyword">def</span> view_assignments(Assignments=Assignments, assignments=<span class="code-keyword">None</span>):
-    <span class="code-keyword">if</span> len(assignments) == 0 <span class="code-keyword">or</span> assignments == <span class="code-keyword">None</span>:
+
+<span class="code-comment"># ==========================================</span>
+<span class="code-comment"># FUNCTION 2: VIEW ASSIGNMENT</span>
+<span class="code-comment"># ==========================================</span>
+<span class="code-keyword">def</span> view_assignments(Assignments=Assignments, assignments=<span class="code-keyword">None</span>):    
+    <span class="code-keyword">if</span> assignments <span class="code-keyword">is None</span> <span class="code-keyword">or</span> len(assignments) == 0:
         print(<span class="code-string">"No assignments found"</span>)
     <span class="code-keyword">else</span>:
         header = [<span class="code-string">"ID"</span>, <span class="code-string">"Assignment Name"</span>, <span class="code-string">"Module"</span>, <span class="code-string">"Deadline"</span>, <span class="code-string">"Difficulty"</span>, <span class="code-string">"Score"</span>, <span class="code-string">"Completed"</span>]
@@ -66,7 +70,7 @@
                 assignment.get(<span class="code-string">"deadline"</span>, <span class="code-string">""</span>),
                 assignment.get(<span class="code-string">"difficulty"</span>, <span class="code-string">""</span>),
                 round(assignment.get(<span class="code-string">"score"</span>, 0), 2),
-                <span class="code-string">"Done"</span> <span class="code-keyword">if</span> assignment.get(<span class="code-string">"completed"</span>, <span class="code-keyword">True</span>) <span class="code-keyword">else</span> <span class="code-string">"Not Done"</span>
+                <span class="code-string">"Done"</span> <span class="code-keyword">if</span> assignment.get(<span class="code-string">"completed"</span>, <span class="code-keyword">False</span>) <span class="code-keyword">else</span> <span class="code-string">"Not Done"</span>
             ]
             print(<span class="code-string">"{:&lt;5} {:&lt;20} {:&lt;15} {:&lt;12} {:&lt;15} {:&lt;8} {:&lt;10}"</span>.format(*row))
 
@@ -74,15 +78,18 @@
     total_assignments = len(assignments) <span class="code-keyword">if</span> assignments <span class="code-keyword">is not None</span> <span class="code-keyword">else</span> 0
     completed_count = 0
     incomplete_count = 0
+
     <span class="code-keyword">for</span> assignment <span class="code-keyword">in</span> assignments:
         <span class="code-keyword">if</span> assignment.get(<span class="code-string">"completed"</span>):
             completed_count = completed_count + 1
         <span class="code-keyword">else</span>:
             incomplete_count = incomplete_count + 1
+
     <span class="code-keyword">if</span> total_assignments == 0:
         completion_rate = 0
     <span class="code-keyword">else</span>:
         completion_rate = round((completed_count / total_assignments) * 100, 2)
+
     print(<span class="code-string">"Total assignments:"</span>, total_assignments)
     print(<span class="code-string">"Completed:"</span>, completed_count)
     print(<span class="code-string">"Incomplete:"</span>, incomplete_count)

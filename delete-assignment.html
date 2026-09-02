@@ -25,11 +25,10 @@
     <div class="overview-box">
         <h3>🔍 What does this file do?</h3>
         <p>This file handles <strong>deleting assignments</strong> from the system. It shows the list
-        of assignments, asks the user to pick one by ID, and removes it from the database.</p>
-        <p><strong>⚠ Note:</strong> This function calls <code>Assignments.delete()</code>, but the
-        LangaDB class does not currently have a <code>delete()</code> method. This means the delete
-        feature is <strong>not fully implemented</strong> — it would cause a runtime error if called.
-        The function is also not connected to the main menu in <code>product.py</code>.</p>
+        of assignments, asks the user to pick one by ID, and removes it from the database using
+        LangaDB's <code>delete()</code> method.</p>
+        <p>This feature is <strong>connected to the main menu</strong> in <code>product.py</code> as
+        option 3 ("Delete Assignment").</p>
     </div>
     <h3 style="font-size:0.6rem;color:var(--accent-yellow);margin-bottom:1rem;">📝 Full Source Code</h3>
     <div class="code-block"><span class="code-keyword">from</span> src.core.read.assignments <span class="code-keyword">import</span> view_assignments
