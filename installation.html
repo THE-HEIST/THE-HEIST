@@ -88,13 +88,25 @@
     <!-- STEP 1 -->
     <div class="step-box">
         <h3>Step 1: Download the Project</h3>
-        <p>Use git to clone (download) the project from GitHub:</p>
-        <div class="code-block"><span class="code-comment"># Clone the repository</span>
+        <p>You have two options to get StudySmart on your computer:</p>
+
+        <div class="info-box">
+            <h4>Option A: Download from GitHub (Full Version with Tests, CI, ...)</h4>
+            <p>Use this if you want the complete project with version history and development structure.</p>
+            <div class="code-block"><span class="code-comment"># Clone the repository</span>
 <span class="code-cmd">git clone</span> https://github.com/THE-HEIST/StudySmart.git
 
 <span class="code-comment"># Enter the project directory</span>
 <span class="code-cmd">cd</span> StudySmart</div>
-        <p>This creates a folder called <code>StudySmart</code> on your computer containing all the project files.</p>
+            <p>This creates a folder called <code>StudySmart</code> on your computer containing all the project files.</p>
+        </div>
+
+        <div class="info-box">
+            <h4>Option B: Run from the ZIP File (Just Using Version)</h4>
+            <p>Use this if you just want to run the application quickly without Git.</p>
+            <p>→ Download the provided ZIP file and extract it to a folder on your computer.</p>
+            <p>→ Open a terminal in the extracted StudySmart folder.</p>
+        </div>
     </div>
 
     <!-- STEP 2 -->
@@ -128,9 +140,19 @@
     <!-- STEP 4 -->
     <div class="step-box">
         <h3>Step 4: Run the Application</h3>
-        <p>Start StudySmart by running the main file:</p>
-        <div class="code-block"><span class="code-cmd">python</span> main.py</div>
-        <p>You should see the welcome screen. If you see an error, check the Troubleshooting section below.</p>
+        <p>You have two ways to start StudySmart:</p>
+
+        <div class="info-box">
+            <h4>Option A: Native Python File</h4>
+            <p>Start StudySmart with:</p>
+            <div class="code-block"><span class="code-cmd">python</span> main.py</div>
+            <p>You should see the welcome screen. If you see an error, check the Troubleshooting section below.</p>
+        </div>
+
+        <div class="info-box">
+            <h4>Option B: Jupyter Notebook File</h4>
+            <p>Start StudySmart by opening the <code>main.ipynb</code> in Anaconda Navigator or other Notebook editor and run the main cell.</p>
+        </div>
     </div>
 
     <!-- STEP 5 -->
@@ -168,6 +190,12 @@
             <h4>Problem: "pip install" fails</h4>
             <p>Solution: Update pip first with <code>pip install --upgrade pip</code>, then try again.</p>
         </div>
+    </div>
+
+    <!-- NOTE -->
+    <div class="step-box" style="border-color: var(--accent-yellow);">
+        <h3 style="color: var(--accent-yellow);">⭐ Note</h3>
+        <p>The ZIP file contains the complete project files required to run StudySmart. The GitHub repository provides the same project with its version history and development structure. For a quick demonstration, the ZIP version can be used directly without cloning the repository.</p>
     </div>
 
     <!-- PROJECT STRUCTURE -->

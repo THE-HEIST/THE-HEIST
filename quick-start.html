@@ -75,16 +75,28 @@
 
     <!-- STEP 1 -->
     <div class="step-box">
-        <h3>Step 1: Clone the Repository</h3>
-        <p>First, download the project source code from GitHub to your computer.</p>
-        <div class="code-block"><span class="code-comment"># Download the project from GitHub</span>
+        <h3>Step 1: Download the Project</h3>
+        <p>You have two options to get StudySmart on your computer:</p>
+
+        <div class="info-box">
+            <h4>Option A: Download from GitHub (Full Version with Tests, CI, ...)</h4>
+            <p>Use this if you want the complete project with version history and development structure.</p>
+            <div class="code-block"><span class="code-comment"># Download the project from GitHub</span>
 <span class="code-cmd">git clone</span> https://github.com/THE-HEIST/StudySmart.git
 
 <span class="code-comment"># Move into the project folder</span>
 <span class="code-cmd">cd</span> StudySmart</div>
-        <p><strong>What this does:</strong> The <code>git clone</code> command copies the entire project
-        from GitHub (an online code storage) to your computer. After that, <code>cd</code> moves you
-        into the project folder.</p>
+            <p><strong>What this does:</strong> The <code>git clone</code> command copies the entire project
+            from GitHub (an online code storage) to your computer. After that, <code>cd</code> moves you
+            into the project folder.</p>
+        </div>
+
+        <div class="info-box">
+            <h4>Option B: Run from the ZIP File (Just Using Version)</h4>
+            <p>Use this if you just want to run the application quickly without Git.</p>
+            <p>→ Download the provided ZIP file and extract it to a folder on your computer.</p>
+            <p>→ Open a terminal in the extracted StudySmart folder.</p>
+        </div>
     </div>
 
     <!-- STEP 2 -->
@@ -102,12 +114,22 @@
     <!-- STEP 3 -->
     <div class="step-box">
         <h3>Step 3: Run the Application</h3>
-        <p>Start the StudySmart application by running the main file.</p>
-        <div class="code-block"><span class="code-comment"># Start the StudySmart application</span>
+        <p>You have two ways to start StudySmart:</p>
+
+        <div class="info-box">
+            <h4>Option A: Native Python File</h4>
+            <p>Start StudySmart with:</p>
+            <div class="code-block"><span class="code-comment"># Start the StudySmart application</span>
 <span class="code-cmd">python</span> main.py</div>
-        <p><strong>What this does:</strong> The <code>python main.py</code> command tells your computer
-        to run the <code>main.py</code> file using the Python interpreter. This file is the
-        "entry point" — the first file that runs when you start the program.</p>
+            <p><strong>What this does:</strong> The <code>python main.py</code> command tells your computer
+            to run the <code>main.py</code> file using the Python interpreter. This file is the
+            "entry point" — the first file that runs when you start the program.</p>
+        </div>
+
+        <div class="info-box">
+            <h4>Option B: Jupyter Notebook File</h4>
+            <p>Start StudySmart by opening the <code>main.ipynb</code> in Anaconda Navigator or other Notebook editor and run the main cell.</p>
+        </div>
     </div>
 
     <!-- STEP 4 -->
@@ -148,6 +170,12 @@ Then choose: <span class="code-cmd">3</span> (View All Assignments)
 <span class="code-comment"># 3. Exit the program (choose option 0)</span>
 Enter your choice: <span class="code-cmd">0</span>
 Good Bye!</div>
+    </div>
+
+    <!-- NOTE -->
+    <div class="step-box" style="border-color: var(--accent-yellow);">
+        <h3 style="color: var(--accent-yellow);">⭐ Note</h3>
+        <p>The ZIP file contains the complete project files required to run StudySmart. The GitHub repository provides the same project with its version history and development structure. For a quick demonstration, the ZIP version can be used directly without cloning the repository.</p>
     </div>
 
     <!-- NEXT STEPS -->
